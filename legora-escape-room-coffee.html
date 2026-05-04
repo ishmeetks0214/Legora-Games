@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Legora Escape Room · First Edition · Before the Coffee Gets Cold</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<style>
+:root {
+  --legora: #005230;
+  --legora-dark: #003D22;
+  --legora-light: #ECFDF5;
+  --coffee-1: #2A1A0E;
+  --coffee-2: #5B3A1F;
+  --coffee-3: #8B5E37;
+  --coffee-4: #C8A077;
+  --cream: #FBF6EE;
+  --cream-2: #F4EBDB;
+  --ink: #1F2937;
+  --ink-muted: #6B7280;
+  --line: #E5E7EB;
+  --paper: #FFFFFF;
+  --paper-tint: #F8FAFC;
+  --rose: #BE123C;
+  --amber: #B45309;
+  --blue: #1D4ED8;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(139,94,55,.10) 0%, transparent 35%),
+    radial-gradient(circle at 85% 80%, rgba(0,82,48,.06) 0%, transparent 40%),
+    var(--cream);
+  color: var(--ink);
+  line-height: 1.55;
+  font-size: 14px;
+  min-height: 100vh;
+}
+button { font-family: inherit; }
+
+.btn { background: var(--legora); color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity .15s, transform .1s; }
+.btn:hover { opacity: .92; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { background: #94A3B8; cursor: not-allowed; }
+.btn-large { padding: 14px 30px; font-size: 15px; }
+.btn-ghost { background: transparent; border: 1px solid var(--line); color: var(--ink-muted); padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.btn-ghost:hover { background: var(--paper-tint); color: var(--ink); }
+.btn-coffee { background: var(--coffee-2); color: var(--cream); }
+.btn-coffee:hover { background: var(--coffee-1); opacity: 1; }
+
+.shell { max-width: 760px; margin: 0 auto; padding: 28px 20px 60px; }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--legora); font-weight: 600; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 16px; }
+.brand .dot { width: 6px; height: 6px; border-radius: 99px; background: var(--legora); }
+.brand .edition { color: var(--coffee-2); font-weight: 500; }
+
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 28px 30px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(15,23,42,.04); }
+.card.warm { background: linear-gradient(180deg, var(--cream) 0%, #FFFFFF 100%); border-color: #E8DFD0; }
+.card h1 { font-size: 30px; font-weight: 600; margin: 0 0 6px; line-height: 1.15; letter-spacing: -.02em; color: var(--coffee-1); }
+.card h2 { font-size: 13px; font-weight: 500; color: var(--ink-muted); margin: 0 0 22px; letter-spacing: .03em; text-transform: uppercase; }
+.card h3 { font-size: 16px; font-weight: 600; margin: 0 0 12px; color: var(--ink); }
+.card p { color: var(--ink); margin: 0 0 12px; line-height: 1.65; }
+.card p:last-child { margin-bottom: 0; }
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 13px; color: var(--ink-muted); font-weight: 500; margin-bottom: 6px; }
+.field input[type="text"], .field input[type="email"] { width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 14px; font-family: inherit; }
+.field input:focus { outline: 2px solid var(--legora); outline-offset: 1px; border-color: var(--legora); }
+
+.banner { background: #FFFBEB; border: 1px solid #FDE68A; padding: 12px 14px; border-radius: 10px; font-size: 13px; color: #854D0E; margin: 14px 0 0; line-height: 1.55; }
+
+/* HOW IT WORKS steps */
+.how-step { display: flex; gap: 14px; margin: 12px 0; padding: 12px 14px; background: var(--cream); border: 1px solid #E8DFD0; border-radius: 12px; }
+.how-step .how-num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 99px; background: var(--coffee-2); color: var(--cream); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; }
+.how-step .how-body { flex: 1; min-width: 0; }
+.how-step .how-title { font-size: 14px; font-weight: 600; color: var(--coffee-1); margin-bottom: 4px; }
+.how-step .how-title .how-sub { color: var(--ink-muted); font-weight: 400; font-size: 13px; }
+.how-step p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--ink); }
+
+/* EMAIL */
+.email { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; margin: 18px 0; overflow: hidden; }
+.email-head { background: var(--paper-tint); padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--ink-muted); }
+.email-head .from { color: var(--ink); font-weight: 600; }
+.email-head .subject { color: var(--ink); font-weight: 600; font-size: 14px; margin-top: 2px; }
+.email-body { padding: 18px; font-size: 14px; line-height: 1.7; color: var(--ink); }
+.email-body p { margin: 0 0 12px; }
+.email-body p:last-child { margin-bottom: 0; }
+.email-body em { color: var(--coffee-2); font-style: italic; }
+
+/* PITCH DECK SLOT */
+.deck-slot { background: var(--paper-tint); border: 2px dashed var(--coffee-3); border-radius: 12px; padding: 22px; text-align: center; margin: 16px 0; }
+.deck-slot .icon { font-size: 26px; margin-bottom: 8px; color: var(--coffee-2); }
+.deck-slot a { color: var(--legora); text-decoration: none; font-weight: 600; font-size: 14px; }
+.deck-slot a:hover { text-decoration: underline; }
+.deck-slot .config-hint { font-size: 11px; color: var(--ink-muted); margin-top: 6px; font-style: italic; }
+
+/* ROOM CARDS */
+.room-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 14px; overflow: hidden; transition: box-shadow .2s, opacity .2s; position: relative; }
+.room-card.locked { opacity: .55; pointer-events: none; background: var(--cream-2); }
+.room-card.active { box-shadow: 0 6px 24px rgba(0,82,48,.10); border-color: #BBF7D0; }
+.room-card.done { background: var(--legora-light); border-color: #BBF7D0; }
+.room-card.locked .lock-overlay { display: flex; }
+.lock-overlay { display: none; position: absolute; inset: 0; background: rgba(251,246,238,.85); align-items: center; justify-content: center; flex-direction: column; gap: 8px; pointer-events: none; z-index: 2; }
+.lock-overlay .lock-icon { font-size: 36px; opacity: .5; }
+.lock-overlay .lock-text { font-size: 12px; color: var(--coffee-2); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.room-head { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid var(--line); background: var(--cream); }
+.room-card.done .room-head { background: var(--legora-light); }
+.room-card.active .room-head { background: linear-gradient(90deg, var(--legora-light) 0%, var(--cream) 100%); }
+.room-num { width: 36px; height: 36px; border-radius: 99px; background: var(--coffee-2); color: var(--cream); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; flex-shrink: 0; }
+.room-card.active .room-num { background: var(--legora); color: #fff; }
+.room-card.done .room-num { background: #047857; color: #fff; }
+.room-title { flex: 1; }
+.room-title h3 { margin: 0; font-size: 16px; font-weight: 600; color: var(--ink); }
+.room-title .sub { font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; }
+.timer-pill { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 14px; font-weight: 600; padding: 6px 12px; border-radius: 99px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); }
+.timer-pill.running { background: var(--legora-light); border-color: #BBF7D0; color: var(--legora); }
+.timer-pill.warn { background: #FEF3C7; border-color: #FDE68A; color: #92400E; }
+.timer-pill.danger { background: #FEE2E2; border-color: #FECACA; color: #991B1B; animation: pulse 1.2s ease-in-out infinite; }
+.timer-pill.done { background: var(--cream-2); color: var(--coffee-2); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .6; } }
+
+.room-body { padding: 20px 22px; }
+.room-body p { margin: 0 0 12px; color: var(--ink); line-height: 1.65; }
+.room-body .nudge { background: var(--cream); border-left: 3px solid var(--coffee-3); padding: 10px 14px; border-radius: 6px; margin: 10px 0; font-size: 13.5px; color: var(--coffee-1); font-style: italic; line-height: 1.6; }
+.room-body .actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; align-items: center; }
+.room-body .actions .spacer { flex: 1; }
+.hint-btn { background: transparent; color: var(--coffee-2); border: 1px dashed var(--coffee-3); padding: 8px 14px; border-radius: 8px; font-size: 12.5px; cursor: pointer; font-weight: 500; }
+.hint-btn:hover { background: var(--cream); }
+.hint-btn .cost { background: var(--coffee-2); color: var(--cream); padding: 1px 7px; border-radius: 99px; font-size: 10px; font-weight: 600; margin-left: 6px; }
+.hint-revealed { background: var(--legora-light); border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-top: 10px; font-size: 13px; color: var(--legora); }
+
+/* UPLOAD */
+.upload-card { background: var(--paper); border: 2px dashed var(--coffee-3); border-radius: 12px; padding: 24px 20px; text-align: center; cursor: pointer; transition: all .15s; margin: 12px 0; display: block; }
+.upload-card:hover { background: var(--cream); border-color: var(--coffee-2); }
+.upload-card.has-file { border-style: solid; border-color: var(--legora); background: var(--legora-light); }
+.upload-card .icon { font-size: 26px; margin-bottom: 6px; }
+.upload-card .title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.upload-card .hint { font-size: 12px; color: var(--ink-muted); }
+.upload-card .filename { font-size: 13px; color: var(--legora); font-weight: 600; margin-top: 8px; }
+.upload-card input[type="file"] { display: none; }
+
+/* MODAL */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(42,26,14,.55); display: none; align-items: flex-start; justify-content: center; z-index: 50; padding: 28px 16px; overflow-y: auto; backdrop-filter: blur(2px); }
+.modal-backdrop.show { display: flex; }
+.modal { background: var(--paper); border-radius: 18px; max-width: 600px; width: 100%; padding: 28px 30px; box-shadow: 0 20px 60px rgba(0,0,0,.25); animation: rise .25s ease-out; margin: auto; }
+@keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.modal-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 99px; background: var(--coffee-2); color: var(--cream); font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.modal h2 { font-size: 20px; margin: 12px 0 4px; font-weight: 600; color: var(--coffee-1); }
+.modal .modal-sub { color: var(--ink-muted); font-size: 13px; margin: 0 0 20px; }
+.modal .q-block { margin-bottom: 20px; }
+.modal .q-text { font-size: 14px; font-weight: 600; margin: 0 0 10px; color: var(--ink); line-height: 1.5; }
+.modal .choices { display: grid; gap: 7px; }
+.modal .choice { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 9px; cursor: pointer; transition: all .12s; background: var(--paper); font-size: 13px; }
+.modal .choice:hover { border-color: #BBF7D0; background: var(--legora-light); }
+.modal .choice.selected { border-color: var(--legora); background: var(--legora-light); }
+.modal .choice input { margin-top: 3px; flex-shrink: 0; accent-color: var(--legora); }
+.modal textarea { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; font-family: inherit; resize: vertical; line-height: 1.55; min-height: 80px; }
+.modal textarea:focus { outline: 2px solid var(--legora); outline-offset: 1px; border-color: var(--legora); }
+.modal .modal-actions { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; }
+
+/* SCORE */
+.score-hero { background: linear-gradient(135deg, var(--coffee-1) 0%, var(--coffee-2) 60%, var(--coffee-3) 100%); color: var(--cream); border-radius: 18px; padding: 32px; text-align: center; margin-bottom: 16px; position: relative; overflow: hidden; }
+.score-hero::after { content: ""; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(251,246,238,.15) 0%, transparent 65%); border-radius: 99px; pointer-events: none; }
+.score-hero .cup-stack { font-size: 40px; line-height: 1; margin-bottom: 10px; }
+.score-hero h1 { font-size: 22px; margin: 0 0 4px; font-weight: 600; }
+.score-hero .team-name { color: var(--coffee-4); font-size: 14px; margin: 0 0 22px; }
+.score-hero .coffee-score { font-size: 80px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.score-hero .of { color: var(--coffee-4); font-size: 15px; margin-top: 4px; }
+.score-hero .tier-name { margin-top: 18px; padding: 8px 18px; background: rgba(251,246,238,.12); border-radius: 99px; display: inline-block; font-size: 14px; font-weight: 500; color: var(--cream); letter-spacing: .02em; }
+.score-hero .signoff { margin-top: 14px; font-size: 13px; color: var(--coffee-4); font-style: italic; line-height: 1.5; padding: 0 14px; }
+
+.score-section { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; }
+.score-section h3 { font-size: 14px; margin: 0 0 12px; font-weight: 600; color: var(--ink); }
+.score-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px; }
+.score-row:last-child { border-bottom: none; }
+.score-row .label { flex: 1; color: var(--ink); }
+.score-row .label .sub { color: var(--ink-muted); font-size: 12px; display: block; margin-top: 2px; }
+.score-row .pts { font-weight: 600; font-family: ui-monospace, monospace; font-size: 13px; min-width: 64px; text-align: right; }
+.score-row .pts.full { color: #047857; }
+.score-row .pts.partial { color: var(--amber); }
+.score-row .pts.miss { color: #94A3B8; }
+.score-row .pts.penalty { color: var(--rose); }
+
+.reveal-card { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; }
+.reveal-card h3 { font-size: 14px; margin: 0 0 10px; font-weight: 600; color: #854D0E; }
+.reveal-card p { font-size: 13px; color: #78350F; line-height: 1.6; margin: 0 0 8px; }
+.reveal-card p:last-child { margin-bottom: 0; }
+
+.certificate { background: var(--cream); border: 4px double var(--coffee-2); padding: 32px 30px; border-radius: 6px; text-align: center; margin: 14px 0; font-family: Georgia, "Times New Roman", serif; color: var(--coffee-1); }
+.certificate .header { font-size: 11px; color: var(--coffee-2); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 10px; }
+.certificate h2 { font-size: 22px; margin: 4px 0; font-family: Georgia, serif; font-weight: 600; }
+.certificate .name { font-size: 24px; margin: 14px 0 6px; font-weight: 700; color: var(--coffee-1); border-bottom: 1px solid var(--coffee-3); padding-bottom: 8px; display: inline-block; min-width: 60%; }
+.certificate .achievement { font-size: 14px; margin: 12px 0; line-height: 1.6; font-style: italic; color: var(--coffee-2); }
+.certificate .score-line { font-size: 18px; font-weight: 600; margin: 14px 0 4px; }
+.certificate .tier-line { font-size: 14px; color: var(--coffee-2); }
+.certificate .footer { font-size: 11px; color: var(--coffee-2); letter-spacing: .1em; text-transform: uppercase; margin-top: 20px; }
+
+.toast { position: fixed; bottom: 22px; right: 22px; background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 13px; box-shadow: 0 4px 16px rgba(0,0,0,.15); opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; pointer-events: none; z-index: 100; max-width: 320px; }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--legora); }
+.toast.warn { background: var(--amber); }
+.toast.error { background: var(--rose); }
+.toast.coffee { background: var(--coffee-2); }
+
+@media (max-width: 600px) {
+  .shell { padding: 16px 14px 40px; }
+  .card { padding: 22px 18px; }
+  .room-head { padding: 14px 16px; }
+  .room-body { padding: 16px; }
+  .modal { padding: 22px 18px; }
+  .score-hero { padding: 24px 18px; }
+  .score-hero .coffee-score { font-size: 60px; }
+}
+
+@media print {
+  body { background: var(--cream); }
+  .no-print, button, .timer-pill, .lock-overlay { display: none !important; }
+  .shell { max-width: none; padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell" id="shell">
+
+  <!-- ============================================
+       STAGE 0 — WELCOME
+       ============================================ -->
+  <div id="stage-welcome" class="stage">
+    <div class="brand"><span class="dot"></span> Legora Escape Room <span class="edition">· First Edition</span></div>
+
+    <div class="card warm">
+      <h1>Welcome to the Legora Escape Room</h1>
+      <h2>First Edition · Before the Coffee Gets Cold</h2>
+      <p>You're a lawyer at <strong>Legora LLP</strong>. It's <strong>8:47 AM</strong>. Your client — the General Counsel of NovaTech Industries — has just emailed you in a panic. A leaked memo. An FT story. A 9:30 Board call. <strong>Forty-five minutes</strong>.</p>
+      <p>The actual lawyering happens in <strong>Legora</strong>. This page tells you what to do and keeps score. When you hit <em>Enter the game</em>, the clock starts.</p>
+
+      <h3 style="margin-top:22px;color:var(--coffee-1);">How it works</h3>
+
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-body">
+          <div class="how-title">Pick Your Blend <span class="how-sub">— Check the brief</span></div>
+          <p>Sarah Chen, the GC at NovaTech, has emailed you. Open it. Read it carefully. The clock is already running.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-body">
+          <div class="how-title">Choose The Milk <span class="how-sub">— Review the documents</span></div>
+          <p>500+ documents are loaded in Legora. Sarah needs a breakdown of everything relevant — who said what, when, and whether it helps or hurts. Build it.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-body">
+          <div class="how-title">Drink Your Coffee <span class="how-sub">— Keep building</span></div>
+          <p>Produce a one-page briefing memo for the CEO. There are bonus points for finding easter eggs, referring to documents, and using the right features. Look up whatever needs looking up — there are Legora features to help you.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <div class="how-body">
+          <div class="how-title">Submit &amp; Score</div>
+          <p>Upload your memo here. Answer Sarah's follow-up questions. Get your coffee rating.</p>
+        </div>
+      </div>
+
+      <div class="meta-row" style="margin-top:18px;">
+        <div><div class="label">Time</div><div class="value">45 mins</div></div>
+        <div><div class="label">Documents</div><div class="value">500+</div></div>
+        <div><div class="label">Rooms</div><div class="value">3</div></div>
+        <div><div class="label">Score</div><div class="value">10 ☕</div></div>
+      </div>
+
+      <div class="field" style="margin-top:18px;">
+        <label for="teamName">Your name or team name <span style="color:var(--ink-muted);">(optional)</span></label>
+        <input type="text" id="teamName" placeholder="e.g. Latham Belgravia" maxlength="60" />
+      </div>
+      <div class="field">
+        <label for="email">Email <span style="color:var(--ink-muted);">(optional)</span></label>
+        <input type="email" id="email" placeholder="you@firm.com" maxlength="100" />
+      </div>
+      <button class="btn btn-large" id="welcomeStart" style="width:100%;margin-top:6px;">Enter the game ☕ →</button>
+      <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin:10px 0 0;">The clock starts the moment you click.</p>
+    </div>
+  </div>
+
+  <!-- ============================================
+       STAGE 1 — BRIEF (with pitch deck)
+       ============================================ -->
+  <div id="stage-brief" class="stage" hidden>
+    <div class="brand"><span class="dot"></span> Legora Escape Room <span class="edition">· The Brief</span></div>
+
+    <div class="card">
+      <h3>What just happened</h3>
+      <p>It's <strong>8 AM on a Tuesday</strong>. Your phone buzzes. The General Counsel of NovaTech Inc. has just sent the email below. An old internal engineering memo about the company's flagship product, <strong>Pulse X</strong>, has leaked. The FT is running a story at 11. The Board is on a call at 9:30. You have until then.</p>
+
+      <div class="email">
+        <div class="email-head">
+          <div class="from">Sarah Chen, General Counsel — NovaTech Industries</div>
+          <div class="subject">URGENT — leaked memo, FT story, 9:30 Board call</div>
+          <div style="margin-top:4px;">Tuesday, 08:47</div>
+        </div>
+        <div class="email-body">
+          <p>I need you on this and I need you fast. A Financial Times journalist has obtained a leaked internal memo about safety concerns with our flagship product, the <strong>Pulse X</strong> smart wearable.</p>
+
+          <p>The CEO has a call with the Board Chair at <strong>9:30 AM</strong>. I need a one-page briefing memo I can put in front of him before that call. That gives you forty-five minutes.</p>
+
+          <p>There are 500+ documents in the review platform. Emails. Contracts. Board minutes. Chat logs. Regulatory filings. Testing reports. <strong>Find the evidence. Answer the questions. Build the memo.</strong></p>
+
+          <p>Don't let the coffee get cold.</p>
+
+          <p>— Sarah</p>
+        </div>
+      </div>
+
+      <div class="banner">⏱️ <strong>The clock is running.</strong> Each room locks the next one until you've finished it. Three rooms. Forty-five minutes. Don't rush, but don't dawdle.</div>
+
+      <div style="display:flex;gap:10px;margin-top:18px;justify-content:space-between;">
+        <button class="btn-ghost" id="briefBack">← Back</button>
+        <button class="btn btn-large" id="briefStart">Into Room 1 ☕ →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       STAGE 2 — ROOMS (single page; rooms unlock in sequence)
+       ============================================ -->
+  <div id="stage-rooms" class="stage" hidden>
+    <div class="brand"><span class="dot"></span> Legora Escape Room
+      <span class="edition" id="overallTimer" style="font-family:ui-monospace,monospace;margin-left:auto;">45:00</span>
+    </div>
+
+    <!-- Room 1 -->
+    <div class="room-card" id="room-1" data-room="1">
+      <div class="lock-overlay"><div class="lock-icon">☕</div><div class="lock-text">Locked</div></div>
+      <div class="room-head">
+        <div class="room-num">1</div>
+        <div class="room-title">
+          <h3>Room 1 · Pick Your Blend</h3>
+          <div class="sub">Sarah: <em>"Know what you have before you brew anything."</em></div>
+        </div>
+        <div class="timer-pill" id="timer-1">20:00</div>
+      </div>
+      <div class="room-body">
+        <p style="font-style:italic;color:var(--coffee-1);">"<u>First</u> — go through the documents and pull everything relevant into a single structured table. I mean everything: every key document as its own row, who wrote it, when, what it says, and whether it helps us or hurts us. The characters in this story matter as much as the chronology. If things contradict each other, I need to know. If there are gaps in the timeline, I need to know. If someone said one thing on the record and something different in private, I need to know. I do not want to be the one finding out on the Board call." — Sarah</p>
+        <p style="font-size:13px;color:var(--ink-muted);margin-top:14px;"><strong>Top Tip:</strong> The strongest espresso starts with the right blend. Know what you have before you brew anything.</p>
+        <div class="nudge">☕ The strongest blend in that room was not brewed in <em>English</em>. Find it — and do not just look at it. Read it.<br>☕ Not everything was ground through a <em>keyboard</em>. Some things were pressed onto paper by hand. The platform can still read it — if you let it.<br>☕ Some of the most important things in that room were said out loud, not poured onto paper. Listen carefully. The platform has ears.</div>
+        <p style="font-size:13px;color:var(--ink-muted);"><strong>Heads-up:</strong> Sarah will ring you part-way through. Pick up. Then keep digging.</p>
+        <div class="actions">
+          <button class="hint-btn" data-hint="1">Need a nudge? <span class="cost">−1 pt</span></button>
+          <div class="spacer"></div>
+          <button class="btn" id="ready-1">I'm ready — the beans are ground ☕</button>
+        </div>
+        <div id="hint-1"></div>
+      </div>
+    </div>
+
+    <!-- Room 2 -->
+    <div class="room-card locked" id="room-2" data-room="2">
+      <div class="lock-overlay"><div class="lock-icon">☕</div><div class="lock-text">Finish Room 1 first</div></div>
+      <div class="room-head">
+        <div class="room-num">2</div>
+        <div class="room-title">
+          <h3>Room 2 · Choose The Milk</h3>
+          <div class="sub">Sarah: <em>"The right base makes or breaks the final cup."</em></div>
+        </div>
+        <div class="timer-pill" id="timer-2">15:00</div>
+      </div>
+      <div class="room-body">
+        <p style="font-style:italic;color:var(--coffee-1);">"<u>Second</u> — I need a briefing memo I can put in front of our CEO and the Board Chair at 9:30. Strong, concise, no weak aftertaste. For everything you tell me, give me the specific document references — I cannot walk into a Board call citing things I cannot point to. Now, before you start typing: have a proper search around that database first. Someone on this team has already ground the beans for you — there is a template in there, and a good lawyer searches before they draft. I would not start from an empty cup if I were you." — Sarah</p>
+        <p style="font-size:13px;color:var(--ink-muted);margin-top:14px;"><strong>Top Tip:</strong> Oat, almond, full fat — the right base makes or breaks the final cup. Choose well. It is already in there.</p>
+        <div class="nudge">☕ Someone has already ground the beans for you — I would not start from an empty cup if I were you.<br>☕ The original spill left quite the stain. Half the internet has already <em>readit</em> and where it came from — but probably not for legal reasons.</div>
+        <label class="upload-card" id="uploadCard">
+          <div class="icon">📄</div>
+          <div class="title">Drop your memo here when you're done</div>
+          <div class="hint">.docx · .pdf · .txt</div>
+          <div class="filename" id="filenameDisplay"></div>
+          <input type="file" id="memoFile" accept=".docx,.pdf,.txt" />
+        </label>
+        <div class="actions">
+          <button class="hint-btn" data-hint="2">Need a nudge? <span class="cost">−1 pt</span></button>
+          <div class="spacer"></div>
+          <button class="btn" id="ready-2">Memo's in — milk's poured 🥛</button>
+        </div>
+        <div id="hint-2"></div>
+      </div>
+    </div>
+
+    <!-- Room 3 -->
+    <div class="room-card locked" id="room-3" data-room="3">
+      <div class="lock-overlay"><div class="lock-icon">☕</div><div class="lock-text">Finish Room 2 first</div></div>
+      <div class="room-head">
+        <div class="room-num">3</div>
+        <div class="room-title">
+          <h3>Room 3 (Bonus) · Collect Your Coffee</h3>
+          <div class="sub">Sarah: <em>"Same drink. Different temperature."</em></div>
+        </div>
+        <div class="timer-pill" id="timer-3">10:00</div>
+      </div>
+      <div class="room-body">
+        <p style="font-style:italic;color:var(--coffee-1);">"<u>Third</u> — I keep hearing about a specific IEC standard, the one that sets surface temperature limits for devices like ours. I have never actually read it and I need to know what it requires before I talk to the Board. Search it using Legora and find the precise limits it sets, and make sure what you find lands in the memo. I need to sound like I know what I am talking about, even if I am running on caffeine and adrenaline." — Sarah</p>
+        <p style="font-size:13px;color:var(--ink-muted);margin-top:14px;"><strong>Top Tip:</strong> Same drink. Different temperature. The detail you add at the end is what makes it complete — and what Sarah will be judged on when she walks into that call.</p>
+        <div class="actions">
+          <button class="hint-btn" data-hint="3">Need a nudge? <span class="cost">−1 pt</span></button>
+          <div class="spacer"></div>
+          <button class="btn" id="ready-3">I'm done — last sip taken 🫖</button>
+        </div>
+        <div id="hint-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       STAGE 3 — SCORE
+       ============================================ -->
+  <div id="stage-score" class="stage" hidden>
+    <div class="brand"><span class="dot"></span> Legora Escape Room <span class="edition">· The Reckoning</span></div>
+    <div id="scoreContent"></div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal">
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ====================================================
+// CONTENT
+// ====================================================
+// Each room has one or more popups. The LAST popup of a room advances to the next room.
+// Earlier popups are mid-room interrupts — they fire without stopping the timer.
+const ROOM_FLOW = [
+  {
+    id: "1",
+    label: "Room 1 · Pick Your Blend",
+    timerSec: 20 * 60,
+    hint: "What you're after: the leaked memo's author, when the underlying programme actually started, and how the boardroom paper trail compares to the engineers' working materials. The matter has documents that aren't in English, documents that aren't typed, and a screenshot the public has already seen — different assistant features pull each one out.",
+    popups: [
+      {
+        id: "1-call",
+        triggerAtSec: 10 * 60,
+        modalTag: "☎  Sarah is ringing",
+        title: "She needs to know immediately",
+        sub: "Pick up. Two questions only — then back to digging. The timer keeps running.",
+        questions: [
+          {
+            id: "q1", type: "mcq",
+            text: "Who wrote the leaked memo?",
+            choices: [
+              { id: "a", label: "Dr. Marcus Webb — author of the March 2024 Product Safety Committee memo" },
+              { id: "b", label: "Elena Cortez — pushed for the risk rating change" },
+              { id: "c", label: "Richard — the CEO who did the CNBC interview" },
+              { id: "d", label: "Charlotte Webb — the FT journalist" }
+            ],
+            correct: "a",
+            truth: "Dr. Marcus Webb's March 2024 memo to NovaTech's Product Safety Committee (DOC_0520) is the document that leaked. It first surfaced on Reddit in March 2024 and was obtained by FT journalist Charlotte Webb in September 2024 — easy to be misled by the shared surname."
+          },
+          {
+            id: "q2", type: "mcq",
+            text: "When did it all start?",
+            choices: [
+              { id: "a", label: "December 2023" },
+              { id: "b", label: "January 2024 — when the first email lands" },
+              { id: "c", label: "February 2024 — when Elena's Board prep is dated" },
+              { id: "d", label: "March 2024" }
+            ],
+            correct: "a",
+            truth: "Handwritten lab notes (DOC_0302) date to 12 December 2023. The first email is 22 January; Elena's Board prep claims February. The official narrative was compressed by ~2 months."
+          }
+        ]
+      },
+      {
+        id: "1-end",
+        triggerAtSec: 20 * 60,
+        modalTag: "Pick Your Blend · check-in",
+        title: "Time's up for Room 1 ☕",
+        sub: "Two more questions, and tell us what easter eggs you found while digging.",
+        questions: [
+          {
+            id: "q3", type: "mcq",
+            text: "Was the Board's decision to launch Pulse X actually unanimous?",
+            choices: [
+              { id: "a", label: "Yes — 5-0 unanimous, signed off in February" },
+              { id: "b", label: "No — 4-1 with Roberto's dissent on the record" },
+              { id: "c", label: "No — Roberto raised reservations the night before but it was never formally tabled" },
+              { id: "d", label: "No — Linda dissented, not Roberto" }
+            ],
+            correct: "c",
+            truth: "DOC_0503: Roberto emailed Linda the night before with three reservations. DOC_0504: Linda replied 'a 4-1 dissent is better than a 5-0 that papers over concerns' — but it was never tabled. The official record reads as unanimous."
+          },
+          {
+            id: "q4", type: "mcq",
+            text: "What risk rating actually went into the Board pack?",
+            choices: [
+              { id: "a", label: "HIGH — as drafted" },
+              { id: "b", label: "MODERATE-HIGH — Elena asked Marcus to change it from HIGH" },
+              { id: "c", label: "MODERATE" },
+              { id: "d", label: "LOW" }
+            ],
+            correct: "b",
+            truth: "DOC_0509: the draft risk rating was HIGH. Elena asked Marcus to change it — 'the Board will read HIGH as a red flag.' The pack went out as MODERATE-HIGH."
+          },
+          {
+            id: "eggs1", type: "text",
+            text: "What easter eggs did you find while digging? List the unusual ones — anything not in English, anything not typed, anything circulating online."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "2",
+    label: "Room 2 · Choose The Milk",
+    timerSec: 15 * 60,
+    requiresMemo: true,
+    hint: "Don't draft from a blank page — the firm's house-style memo template is somewhere in the matter (its filename ends in 0518). Use the assistant's editor or the Word add-in to draft against it. There's also a recording in the file worth running through the assistant's transcription before you sign off.",
+    popups: [
+      {
+        id: "2-end",
+        triggerAtSec: 15 * 60,
+        modalTag: "Choose The Milk · check-in",
+        title: "Memo's in. Sarah's reading.",
+        sub: "One question before the IEC lookup — and tell us what you found while drafting.",
+        questions: [
+          {
+            id: "q5", type: "mcq",
+            text: "What is the right recommended response to the FT?",
+            choices: [
+              { id: "a", label: "No comment until we have the full picture" },
+              { id: "b", label: "Detailed point-by-point response with all internal documents" },
+              { id: "c", label: "A short transparent holding statement; brief analysts; notify Meridian; reopen the investigation" },
+              { id: "d", label: "Aggressive denial — push back on the leaked memo's framing" }
+            ],
+            correct: "c",
+            truth: "Transparent holding statement, brief analysts, notify Meridian, hold detail until the reopened internal investigation closes. Stonewalling and over-disclosing are both worse."
+          },
+          {
+            id: "eggs2", type: "text",
+            text: "Anything you found while drafting? Audio transcripts, late-discovered docs, citations you used in the memo."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "3",
+    label: "Room 3 (Bonus) · Collect Your Coffee",
+    timerSec: 10 * 60,
+    hint: "Look up IEC 62368-1 — the certification reference is in the file along with the certification documents themselves. Don't confuse a known engineering issue with a standards failure.",
+    popups: [
+      {
+        id: "3-end",
+        triggerAtSec: 10 * 60,
+        modalTag: "Collect Your Coffee · last call",
+        title: "Final answers before the Board call ☕",
+        sub: "Two questions and one last egg sweep.",
+        questions: [
+          {
+            id: "q6", type: "mcq",
+            text: "Does Pulse X meet the IEC 62368-1 safety standard?",
+            choices: [
+              { id: "a", label: "Yes — passed certification (DOC_0519); small print: standard wasn't designed for 24/7 wearables" },
+              { id: "b", label: "Partially — meets baseline thermal limits but not the supplementary clauses" },
+              { id: "c", label: "No — fails on §5.4 (thermal energy limits)" },
+              { id: "d", label: "The standard does not apply to this product class" }
+            ],
+            correct: "a",
+            truth: "Pulse X passed IEC 62368-1 certification (DOC_0519). The thermal issue is a known-issue note inside the engineering team, not a standards failure. The small-print catch is that 62368-1 wasn't designed for 24/7 wearables — Meridian (DOC_0524) is privately asking exactly that question."
+          },
+          {
+            id: "q7", type: "mcq",
+            text: "What is the most defensible reading of NovaTech's legal exposure?",
+            choices: [
+              { id: "a", label: "HIGH — likely securities fraud and product liability" },
+              { id: "b", label: "MODERATE — disclosure failure plus potential negligence claims" },
+              { id: "c", label: "LOW — formal governance steps were taken; the gap is reputational" },
+              { id: "d", label: "Cannot tell from the documents" }
+            ],
+            correct: "c",
+            truth: "Legal exposure is LOW. Governance worked formally — Product Safety Committee reviewed (DOC_0520), Board approved launch (DOC_0529), risk rating disclosed, regulator informed. Sarah's own notes (DOC_0526 — 'NovaTech Knew') confirm the gap is reputational, not legal."
+          },
+          {
+            id: "eggsFinal", type: "text",
+            text: "Last sweep. Anything from the corners you haven't flagged yet? List every doc number / oddity you can recall."
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// Easter-egg keyword scoring (against accumulated text from all the eggs* fields)
+const EGG_KEYWORDS = [
+  { id:"egg-foreign",    label:"Foreign-language doc found",  feature:"DeepL",              kws:["chinese","mandarin","french","translate","translation","deepl","0301","0308","非英"], pts:5 },
+  { id:"egg-handwriting",label:"Handwritten material found",  feature:"Handwriting OCR",    kws:["handwrit","hand writ","scan","notebook","margin","0302","0306","scribble"], pts:5 },
+  { id:"egg-image",      label:"Reddit / leaked screenshot",  feature:"Image OCR",           kws:["reddit","screenshot","image","ocr","leak","0159","forum","thread"], pts:5 },
+  { id:"egg-audio",      label:"Audio file transcribed",      feature:"Audio Transcription", kws:["audio","voicemail","mp3","transcrib","voice","recording","0501","podcast"], pts:5 }
+];
+
+// Memo keyword scoring
+const MEMO_KEYWORDS = [
+  { kws:["thermal"],                  label:"Thermal issue mentioned",         pts:2 },
+  { kws:["pulse x","pulse-x"],        label:"Pulse X named",                   pts:2 },
+  { kws:["moderate"],                 label:"Risk rating discussed",           pts:2 },
+  { kws:["transparent","holding"],    label:"Holding-statement recommendation",pts:2 },
+  { kws:["62368","iec"],              label:"IEC 62368 referenced",            pts:2 },
+  { kws:["roberto","dissent"],        label:"Roberto / dissent flagged",       pts:2 },
+  { kws:["december 2023","12/2023"],  label:"December 2023 timeline",          pts:1 },
+  { kws:["doc_0"],                    label:"Citation pattern (DOC_xxxx)",     pts:2 }
+];
+
+// QUIRKY tier descriptors
+const TIERS = [
+  { min: 9.1, label: "Hand-brewed masterpiece",
+    signoff: "Sarah is currently revising her will to add you. The CEO is in your DMs. Somebody on the Board has cried.", icon: "☕☕☕☕" },
+  { min: 8.0, label: "Reserve pour-over",
+    signoff: "Your partner is taking you to The Connaught. The associate next to you is updating their CV.", icon: "☕☕☕" },
+  { min: 6.6, label: "Double-shot oat latte",
+    signoff: "Sarah didn't have to redraft your draft. The Board call happens. The FT spells your firm's name correctly.", icon: "☕☕" },
+  { min: 5.1, label: "Chain flat white",
+    signoff: "Pret would still serve this. Just. The Board got a memo. It was, broadly, a memo.", icon: "☕" },
+  { min: 3.1, label: "Vending instant",
+    signoff: "Your associate is redoing the DD before lunch. The 9:30 has been moved to 10:30. Sarah wants 'a quick word'.", icon: "🥤" },
+  { min: 0,   label: "Tap water",
+    signoff: "Sarah is reading the FT story on her own. The CEO has gone on CNBC unbriefed. You are eating a Pret salad alone.", icon: "💧" }
+];
+
+// ====================================================
+// STATE
+// ====================================================
+const STORAGE_KEY = "legora-escape-coffee-v3";
+function defaultState() {
+  return {
+    teamName: "",
+    email: "",
+    stage: "welcome",          // welcome | brief | rooms | score
+    started: false,
+    startTimestamp: 0,
+    currentRoomIdx: 0,         // index into ROOM_FLOW
+    roomTimersStarted: {},     // roomId -> ms timestamp when timer started
+    popupAnsweredAt: {},       // popupId -> ms timestamp when popup submitted
+    answers: {},               // qid -> choice id (mcq) or text (text)
+    hintsUsed: {},             // roomId -> true
+    fileName: "",
+    fileBytes: 0,
+    memoText: "",
+    submitted: false,
+    finalScore: 0,
+    coffeeScore: 0,
+    breakdown: {}
+  };
+}
+// Allow ?reset=1 to force a fresh start regardless of stored state
+if (new URLSearchParams(location.search).has("reset")) {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+}
+let state = loadState();
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return Object.assign(defaultState(), JSON.parse(raw));
+  } catch(e) {}
+  return defaultState();
+}
+function saveState() {
+  const toSave = Object.assign({}, state);
+  toSave.memoText = state.memoText ? state.memoText.substring(0, 8000) : "";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+}
+
+// ====================================================
+// STAGE TRANSITIONS
+// ====================================================
+function showStage(name) {
+  document.querySelectorAll(".stage").forEach(s => s.hidden = true);
+  document.getElementById("stage-" + name).hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  state.stage = name;
+  saveState();
+}
+
+// ====================================================
+// WELCOME
+// ====================================================
+const $teamInput = document.getElementById("teamName");
+const $emailInput = document.getElementById("email");
+if (state.teamName) $teamInput.value = state.teamName;
+if (state.email) $emailInput.value = state.email;
+
+document.getElementById("welcomeStart").addEventListener("click", () => {
+  state.teamName = $teamInput.value.trim() || "Anonymous Lawyer";
+  state.email = $emailInput.value.trim();
+  // Timer starts the moment they enter the game
+  if (!state.started) {
+    state.started = true;
+    state.startTimestamp = Date.now();
+  }
+  saveState();
+  showStage("brief");
+  toast("☕ Clock's running. Read Sarah's email and get into the rooms.", "coffee");
+});
+
+document.getElementById("briefBack").addEventListener("click", () => showStage("welcome"));
+document.getElementById("briefStart").addEventListener("click", () => {
+  saveState();
+  showStage("rooms");
+  initRooms();
+});
+
+// ====================================================
+// ROOMS — main controller
+// ====================================================
+let timerInterval = null;
+let overallTimerInterval = null;
+
+function currentRoom() { return ROOM_FLOW[state.currentRoomIdx]; }
+
+function initRooms() {
+  // Render lock state for all rooms
+  ROOM_FLOW.forEach((r, i) => {
+    const card = document.getElementById("room-" + r.id);
+    card.classList.remove("locked", "active", "done");
+    if (i < state.currentRoomIdx) card.classList.add("done");
+    else if (i === state.currentRoomIdx) card.classList.add("active");
+    else card.classList.add("locked");
+  });
+  // Hint buttons
+  document.querySelectorAll(".hint-btn").forEach(btn => {
+    btn.onclick = () => useHint(btn.dataset.hint);
+    if (state.hintsUsed[btn.dataset.hint]) {
+      const room = ROOM_FLOW.find(r => r.id === btn.dataset.hint);
+      const div = document.getElementById("hint-" + btn.dataset.hint);
+      if (div) div.innerHTML = `<div class="hint-revealed"><b>Nudge:</b> ${escapeHtml(room.hint)}</div>`;
+    }
+  });
+  // Ready buttons — fire next unanswered popup
+  ROOM_FLOW.forEach(r => {
+    const btn = document.getElementById("ready-" + r.id);
+    if (btn) btn.onclick = () => {
+      const next = r.popups.find(p => !state.popupAnsweredAt[p.id]);
+      if (next) fireRoomPopup(r.id, next.id);
+    };
+  });
+  // File upload
+  setupFileUpload();
+  // Start ticking the active room
+  startCurrentRoomTimer();
+  startOverallTimer();
+}
+
+function startCurrentRoomTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  const r = currentRoom();
+  if (!r) return;
+  // Lazy-init timer start time
+  if (!state.roomTimersStarted[r.id]) {
+    state.roomTimersStarted[r.id] = Date.now();
+    saveState();
+  }
+  const $pill = document.getElementById("timer-" + r.id);
+  const tick = () => {
+    const elapsed = Math.floor((Date.now() - state.roomTimersStarted[r.id]) / 1000);
+    const remaining = Math.max(0, r.timerSec - elapsed);
+    const mm = Math.floor(remaining / 60), ss = remaining % 60;
+    $pill.textContent = String(mm).padStart(2,"0") + ":" + String(ss).padStart(2,"0");
+    $pill.classList.add("running");
+    $pill.classList.remove("warn", "danger", "done");
+    if (remaining <= 60) $pill.classList.add("danger");
+    else if (remaining <= 180) $pill.classList.add("warn");
+    // Find next unanswered popup whose trigger has been reached
+    const nextPopup = r.popups.find(p => !state.popupAnsweredAt[p.id] && elapsed >= p.triggerAtSec);
+    const modalOpen = document.getElementById("modalBackdrop").classList.contains("show");
+    if (nextPopup && !modalOpen) {
+      const isInterrupt = nextPopup !== r.popups[r.popups.length - 1];
+      if (isInterrupt) toast("☎  Sarah is calling — pick up", "coffee");
+      else { toast("Time's up for this room ☕", "coffee"); $pill.classList.add("done"); $pill.classList.remove("running","warn","danger"); }
+      fireRoomPopup(r.id, nextPopup.id);
+    }
+  };
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+
+function startOverallTimer() {
+  if (overallTimerInterval) clearInterval(overallTimerInterval);
+  const $o = document.getElementById("overallTimer");
+  const total = 45 * 60;
+  const tick = () => {
+    if (!state.startTimestamp) return;
+    const e = Math.floor((Date.now() - state.startTimestamp) / 1000);
+    const r = Math.max(0, total - e);
+    const mm = Math.floor(r / 60), ss = r % 60;
+    $o.textContent = String(mm).padStart(2,"0") + ":" + String(ss).padStart(2,"0");
+  };
+  tick();
+  overallTimerInterval = setInterval(tick, 1000);
+}
+
+function useHint(roomId) {
+  if (state.hintsUsed[roomId]) return;
+  if (!confirm("Using a nudge costs you 1 point. Take it?")) return;
+  state.hintsUsed[roomId] = true;
+  saveState();
+  const room = ROOM_FLOW.find(r => r.id === roomId);
+  const div = document.getElementById("hint-" + roomId);
+  div.innerHTML = `<div class="hint-revealed"><b>Nudge:</b> ${escapeHtml(room.hint)}</div>`;
+  toast("Nudge given · −1 pt at score time", "coffee");
+}
+
+// ====================================================
+// FILE UPLOAD (Room 2)
+// ====================================================
+function setupFileUpload() {
+  const $up = document.getElementById("uploadCard");
+  const $f = document.getElementById("memoFile");
+  const $name = document.getElementById("filenameDisplay");
+  if (state.fileName) {
+    $up.classList.add("has-file");
+    $name.textContent = state.fileName + " · " + (state.fileBytes/1024).toFixed(1) + " KB";
+  }
+  $f.onchange = async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    state.fileName = file.name;
+    state.fileBytes = file.size;
+    $up.classList.add("has-file");
+    $name.textContent = file.name + " · " + (file.size/1024).toFixed(1) + " KB";
+    if (file.name.toLowerCase().endsWith(".docx")) {
+      try {
+        const ab = await file.arrayBuffer();
+        const r = await mammoth.extractRawText({ arrayBuffer: ab });
+        state.memoText = r.value || "";
+        toast("Memo parsed · " + state.memoText.length + " chars", "success");
+      } catch (err) { state.memoText = ""; toast("Couldn't parse .docx — uploaded anyway", "warn"); }
+    } else if (file.name.toLowerCase().endsWith(".txt")) {
+      try { state.memoText = await file.text(); toast("Memo loaded", "success"); } catch (e) { state.memoText = ""; }
+    } else {
+      state.memoText = "";
+      toast("PDF stored, can't keyword-score (facilitator review)", "warn");
+    }
+    saveState();
+  };
+}
+
+// ====================================================
+// POPUP
+// ====================================================
+function fireRoomPopup(roomId, popupId) {
+  const room = ROOM_FLOW.find(r => r.id === roomId);
+  if (!room) return;
+  const popup = room.popups.find(p => p.id === popupId);
+  if (!popup) return;
+  if (state.popupAnsweredAt[popupId]) return;
+  const isFinal = popup === room.popups[room.popups.length - 1];
+  // Memo gate only on Room 2's final popup
+  if (isFinal && room.requiresMemo && !state.fileName) {
+    if (!confirm("You haven't uploaded a memo yet. Continue without it? You'll lose memo points.")) return;
+  }
+  renderModal(room, popup, isFinal);
+  document.getElementById("modalBackdrop").classList.add("show");
+}
+
+function renderModal(room, popup, isFinal) {
+  const $c = document.getElementById("modalContent");
+  let html = `<div class="modal-tag">${escapeHtml(popup.modalTag || room.label)}</div>`;
+  html += `<h2>${escapeHtml(popup.title || "Check-in")}</h2>`;
+  html += `<p class="modal-sub">${escapeHtml(popup.sub || "")}</p>`;
+  popup.questions.forEach((q, i) => {
+    html += `<div class="q-block" data-qid="${q.id}">`;
+    html += `<div class="q-text">${i+1}. ${escapeHtml(q.text)}</div>`;
+    if (q.type === "mcq") {
+      html += `<div class="choices">`;
+      q.choices.forEach(c => {
+        const sel = state.answers[q.id] === c.id;
+        html += `<label class="choice ${sel?"selected":""}" data-q="${q.id}" data-c="${c.id}">
+          <input type="radio" name="${q.id}" ${sel?"checked":""}>
+          <span>${escapeHtml(c.label)}</span>
+        </label>`;
+      });
+      html += `</div>`;
+    } else if (q.type === "text") {
+      const cur = state.answers[q.id] || "";
+      html += `<textarea data-q="${q.id}" placeholder="What did you find?">${escapeHtml(cur)}</textarea>`;
+    }
+    html += `</div>`;
+  });
+  const submitLabel = isFinal ? "Serve it up ☕" : "Tell Sarah → back to the grind";
+  html += `<div class="modal-actions">`;
+  html += `<button class="btn-ghost" id="modalCancel">Wait, let me think</button>`;
+  html += `<button class="btn" id="modalSubmit">${submitLabel}</button>`;
+  html += `</div>`;
+  $c.innerHTML = html;
+
+  $c.querySelectorAll(".choice").forEach(ch => {
+    ch.addEventListener("click", () => {
+      const qid = ch.dataset.q, cid = ch.dataset.c;
+      state.answers[qid] = cid;
+      saveState();
+      $c.querySelectorAll(`[data-q="${qid}"]`).forEach(x => x.classList.toggle("selected", x.dataset.c === cid));
+      $c.querySelectorAll(`input[name="${qid}"]`).forEach(inp => inp.checked = inp.closest(".choice").dataset.c === cid);
+    });
+  });
+  $c.querySelectorAll("textarea[data-q]").forEach(t => {
+    t.oninput = () => { state.answers[t.dataset.q] = t.value; saveState(); };
+  });
+  document.getElementById("modalCancel").onclick = () => {
+    document.getElementById("modalBackdrop").classList.remove("show");
+  };
+  document.getElementById("modalSubmit").onclick = () => closePopup(room.id, popup.id);
+}
+
+function closePopup(roomId, popupId) {
+  const room = ROOM_FLOW.find(r => r.id === roomId);
+  const popup = room.popups.find(p => p.id === popupId);
+  // Validate MCQs in this popup only
+  const missing = popup.questions.filter(q => q.type === "mcq" && !state.answers[q.id]);
+  if (missing.length > 0) {
+    toast("Pick an answer for every multiple-choice question first", "warn");
+    return;
+  }
+  state.popupAnsweredAt[popupId] = Date.now();
+  saveState();
+  document.getElementById("modalBackdrop").classList.remove("show");
+
+  const isFinal = popup === room.popups[room.popups.length - 1];
+  if (!isFinal) {
+    toast("Sarah's got it — back to digging ☕", "success");
+    return;  // timer keeps running, room stays active
+  }
+
+  // Final popup — mark room done, advance
+  const idx = ROOM_FLOW.findIndex(r => r.id === roomId);
+  document.getElementById("room-" + roomId).classList.remove("active");
+  document.getElementById("room-" + roomId).classList.add("done");
+  document.getElementById("timer-" + roomId).classList.remove("running","warn","danger");
+  document.getElementById("timer-" + roomId).classList.add("done");
+  if (idx + 1 < ROOM_FLOW.length) {
+    state.currentRoomIdx = idx + 1;
+    saveState();
+    const next = ROOM_FLOW[idx + 1];
+    const nextCard = document.getElementById("room-" + next.id);
+    nextCard.classList.remove("locked");
+    nextCard.classList.add("active");
+    startCurrentRoomTimer();
+    nextCard.scrollIntoView({ behavior: "smooth", block: "center" });
+    toast(`${next.label} unlocked · ${Math.floor(next.timerSec/60)} min on the clock`, "success");
+  } else {
+    finishGame();
+  }
+}
+
+// ====================================================
+// SCORING
+// ====================================================
+function eggsCombinedText() {
+  return [state.answers.eggs1, state.answers.eggs2, state.answers.eggsFinal]
+    .filter(Boolean).join(" \n ").toLowerCase();
+}
+
+function scoreEggs() {
+  const text = eggsCombinedText();
+  const found = [];
+  let pts = 0;
+  EGG_KEYWORDS.forEach(e => {
+    const hit = e.kws.some(k => text.includes(k));
+    if (hit) { pts += e.pts; found.push(e); }
+  });
+  return { pts, found };
+}
+
+function scoreMemo() {
+  if (!state.memoText) {
+    return { pts: state.fileName ? 5 : 0, found: state.fileName ? ["Memo uploaded (PDF or unparsed) — baseline 5 awarded; facilitator should review"] : ["No memo uploaded"], notes: state.fileName ? "Uploaded but not parsed" : "Not uploaded" };
+  }
+  const lower = state.memoText.toLowerCase();
+  let pts = 0; const found = [];
+  MEMO_KEYWORDS.forEach(c => {
+    if (c.kws.some(k => lower.includes(k))) { pts += c.pts; found.push(c.label); }
+  });
+  const words = state.memoText.split(/\s+/).filter(Boolean).length;
+  if (words >= 200) { pts += 2; found.push(`Memo length ≥ 200 words (${words})`); }
+  return { pts: Math.min(pts, 15), found, notes: words + " words extracted" };
+}
+
+function computeScore() {
+  const b = {};
+  // Questions — 5 pts each
+  let qPts = 0; const qResults = []; let allMcqAnswered = true;
+  ROOM_FLOW.forEach(r => r.popups.forEach(p => p.questions.forEach(q => {
+    if (q.type === "mcq") {
+      const ans = state.answers[q.id];
+      if (!ans) allMcqAnswered = false;
+      const correct = ans === q.correct;
+      if (correct) qPts += 5;
+      const correctLabel = q.choices.find(c => c.id === q.correct).label;
+      qResults.push({ id: q.id, text: q.text, ans, correct, correctLabel, truth: q.truth });
+    }
+  })));
+  b.questions = qPts;
+  b.allMcqBonus = allMcqAnswered ? 5 : 0;
+  // Eggs
+  const e = scoreEggs();
+  b.eggs = e.pts;
+  b.eggResults = e.found;
+  // Memo
+  const m = scoreMemo();
+  b.memo = m.pts;
+  b.memoFindings = m.found;
+  b.memoNotes = m.notes;
+  // Hints — 1 pt each penalty
+  const hintsCount = Object.values(state.hintsUsed).filter(Boolean).length;
+  b.hintPenalty = hintsCount;
+  // Total — out of 75 (35 questions + 5 bonus + 20 eggs + 15 memo) minus hints
+  // 7 mcq × 5 = 35
+  // bonus 5
+  // eggs 20
+  // memo 15
+  // = 75 max
+  const total = Math.max(0, b.questions + b.allMcqBonus + b.eggs + b.memo - b.hintPenalty);
+  state.finalScore = total;
+  state.coffeeScore = Math.round((total / 75) * 100) / 10;
+  state.breakdown = b;
+  state.qResults = qResults;
+}
+
+function tierFor(score) {
+  for (const t of TIERS) if (score >= t.min) return t;
+  return TIERS[TIERS.length-1];
+}
+
+function finishGame() {
+  state.submitted = true;
+  computeScore();
+  saveState();
+  showStage("score");
+  renderScore();
+}
+
+// ====================================================
+// SCORE RENDER
+// ====================================================
+function renderScore() {
+  const c = document.getElementById("scoreContent");
+  const b = state.breakdown;
+  const tier = tierFor(state.coffeeScore);
+  const total = state.finalScore;
+
+  let html = `<div class="score-hero">
+    <div class="cup-stack">${tier.icon}</div>
+    <h1>${escapeHtml(state.teamName || "Team")}</h1>
+    <p class="team-name">Before the Coffee Gets Cold · final tally</p>
+    <div class="coffee-score">${state.coffeeScore.toFixed(1)}</div>
+    <div class="of">/ 10 ☕ · raw ${total} / 75</div>
+    <div class="tier-name">${tier.label}</div>
+    <div class="signoff">${escapeHtml(tier.signoff)}</div>
+  </div>`;
+
+  // Breakdown
+  html += `<div class="score-section"><h3>How that broke down</h3>`;
+  html += scoreRow("Multiple-choice questions (7 × 5)", b.questions, 35, "miss");
+  html += scoreRow("All MCQs answered (bonus)", b.allMcqBonus, 5);
+  html += scoreRow("Easter eggs found (4 × 5)", b.eggs, 20);
+  html += scoreRow("Memo quality (keyword + length)", b.memo, 15);
+  if (b.hintPenalty > 0) {
+    html += `<div class="score-row"><span class="label">Nudges taken (−1 pt each)</span><span class="pts penalty">−${b.hintPenalty}</span></div>`;
+  }
+  html += `</div>`;
+
+  // Per-question reveal
+  html += `<div class="score-section"><h3>Answer key — what you got, what you missed</h3>`;
+  state.qResults.forEach((q, i) => {
+    const sym = q.correct ? "✓" : (q.ans ? "✗" : "—");
+    const col = q.correct ? "#047857" : "#94A3B8";
+    html += `<div style="padding:10px 0;border-bottom:1px solid #F1F5F9;">
+      <div style="font-size:13px;font-weight:600;color:var(--ink);">
+        <span style="color:${col};margin-right:6px;">${sym}</span>
+        Q${i+1}. ${escapeHtml(q.text)}
+      </div>
+      <div style="font-size:12.5px;color:var(--ink-muted);margin-top:4px;line-height:1.6;">
+        ${q.correct ? "<b style='color:#047857;'>You got it.</b>" : `Correct: <b>${escapeHtml(q.correctLabel)}</b>`} — ${escapeHtml(q.truth)}
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Eggs
+  html += `<div class="score-section"><h3>Easter eggs · what you spotted</h3>`;
+  EGG_KEYWORDS.forEach(e => {
+    const hit = b.eggResults.some(r => r.id === e.id);
+    html += `<div class="score-row">
+      <span style="width:18px;flex-shrink:0;text-align:center;font-weight:700;color:${hit?"#047857":"#94A3B8"};">${hit?"✓":"—"}</span>
+      <span class="label"><b>${escapeHtml(e.label)}</b><span class="sub">Tested feature: ${escapeHtml(e.feature)}</span></span>
+      <span class="pts ${hit?"full":"miss"}">${hit?"+5":"0"}</span>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Memo
+  html += `<div class="score-section"><h3>Memo · keyword + length scoring</h3>`;
+  html += `<div style="font-size:13px;color:var(--ink-muted);margin-bottom:10px;">${state.fileName ? "<b>" + escapeHtml(state.fileName) + "</b> · " + (state.fileBytes/1024).toFixed(1) + " KB · " + escapeHtml(b.memoNotes) : "No memo uploaded."}</div>`;
+  if (b.memoFindings && b.memoFindings.length) {
+    html += `<ul style="margin:0 0 6px 20px;padding:0;">`;
+    b.memoFindings.forEach(f => { html += `<li style="font-size:13px;padding:2px 0;">${escapeHtml(f)}</li>`; });
+    html += `</ul>`;
+  }
+  html += `<div style="margin-top:8px;font-size:12px;color:var(--ink-muted);"><em>Note: keyword scoring is a sanity check, not a substitute for partner read.</em></div>`;
+  html += `</div>`;
+
+  // Big-picture answer
+  html += `<div class="reveal-card">
+    <h3>The answer the memo should reach</h3>
+    <p>Legal exposure is <b>LOW</b>. Governance worked formally — Board reviewed, risk rating disclosed, regulator informed. The exposure is reputational and personal-credibility, not legal violation.</p>
+    <p>Recommended approach: a transparent holding statement to the FT; brief analysts pre-market; notify Meridian; reopen the internal investigation; hold detailed comment until that closes. Stonewalling and over-disclosing are both worse.</p>
+  </div>`;
+
+  // Certificate
+  html += `<div class="certificate" id="certificate">
+    <div class="header">Legora Escape Room · First Edition</div>
+    <h2>Before the Coffee Gets Cold</h2>
+    <div style="font-size:11px;color:var(--coffee-2);margin:8px 0;">awarded to</div>
+    <div class="name">${escapeHtml(state.teamName || "Team")}</div>
+    <div class="achievement">for surviving Sarah Chen's 8 AM and the morning of <span style="font-style:italic;">${(new Date()).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}</span></div>
+    <div class="score-line">${state.coffeeScore.toFixed(1)} / 10 ${tier.icon}</div>
+    <div class="tier-line">${tier.label}</div>
+    <div class="footer">${state.coffeeScore >= 8 ? "Official Legora Escape Room Escapee" : "Brewed but not bottled"}</div>
+  </div>`;
+
+  // Buttons
+  html += `<div class="card no-print" style="margin-top:14px;">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-ghost" id="printBtn">Print / save certificate as PDF</button>
+      <button class="btn-ghost" id="downloadBtn">Download score JSON</button>
+      <button class="btn" id="emailBtn">Email it to me</button>
+      <button class="btn-coffee" id="resetBtn">Pour a new cup ☕</button>
+    </div>
+    <div class="banner" style="margin-top:14px;">If your facilitator deployed this with Netlify Forms or similar, your submission is already with them. Otherwise — print, download, or email the certificate to whoever is keeping the leaderboard.</div>
+  </div>`;
+
+  c.innerHTML = html;
+
+  document.getElementById("printBtn").onclick = () => window.print();
+  document.getElementById("downloadBtn").onclick = downloadJSON;
+  document.getElementById("emailBtn").onclick = emailCert;
+  document.getElementById("resetBtn").onclick = () => {
+    if (!confirm("Pour a new cup? Your current run will be wiped.")) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  };
+}
+
+function scoreRow(label, got, max) {
+  const cls = got >= max ? "full" : got > 0 ? "partial" : "miss";
+  const sign = got > 0 ? "+" : "";
+  return `<div class="score-row"><span class="label">${escapeHtml(label)}</span><span class="pts ${cls}">${sign}${got} / ${max}</span></div>`;
+}
+
+function downloadJSON() {
+  const payload = {
+    teamName: state.teamName, email: state.email,
+    submittedAt: new Date().toISOString(),
+    coffeeScore: state.coffeeScore, rawScore: state.finalScore,
+    breakdown: state.breakdown, answers: state.answers,
+    qResults: state.qResults, hintsUsed: state.hintsUsed,
+    fileName: state.fileName
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `coffee-${(state.teamName||"team").replace(/[^a-z0-9]/gi,"-").toLowerCase()}-${state.coffeeScore}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  toast("Score JSON downloaded", "success");
+}
+
+function emailCert() {
+  const tier = tierFor(state.coffeeScore);
+  const subject = `Coffee score · ${state.teamName} · ${state.coffeeScore.toFixed(1)}/10`;
+  const body = `${state.teamName}\nCoffee score: ${state.coffeeScore.toFixed(1)} / 10 ${tier.icon}\nTier: ${tier.label}\n\n${tier.signoff}\n\nMemo: ${state.fileName || "none"}\nMCQ correct: ${(state.qResults||[]).filter(q=>q.correct).length} / 7\nNudges taken: ${Object.values(state.hintsUsed).filter(Boolean).length}\n\nGenerated by Legora Escape Room · First Edition · Before the Coffee Gets Cold`;
+  window.location.href = `mailto:${state.email||""}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+// ====================================================
+// HELPERS
+// ====================================================
+function escapeHtml(s) {
+  return (s || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c]);
+}
+function toast(msg, kind) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show " + (kind || "");
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.className = "toast " + (kind||""); }, 2400);
+}
+
+// ====================================================
+// INIT — restore stage if mid-game
+// ====================================================
+if (state.submitted) {
+  showStage("score"); renderScore();
+} else if (state.stage === "rooms") {
+  showStage("rooms"); initRooms();
+} else if (state.stage === "brief") {
+  showStage("brief");
+}
+</script>
+</body>
+</html>
