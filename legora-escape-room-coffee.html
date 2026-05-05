@@ -120,6 +120,9 @@ button { font-family: inherit; }
 .timer-pill.done { background: var(--cream-2); color: var(--coffee-2); }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .6; } }
 
+/* Overall-timer overtime state */
+#overallTimer.overtime { color: var(--rose) !important; font-weight: 700; animation: pulse 1.4s ease-in-out infinite; letter-spacing: .04em; }
+
 .room-body { padding: 20px 22px; }
 .room-body p { margin: 0 0 12px; color: var(--ink); line-height: 1.65; }
 .room-body .nudge { background: var(--cream); border-left: 3px solid var(--coffee-3); padding: 10px 14px; border-radius: 6px; margin: 10px 0; font-size: 13.5px; color: var(--coffee-1); font-style: italic; line-height: 1.6; }
@@ -797,12 +800,25 @@ function startOverallTimer() {
   if (overallTimerInterval) clearInterval(overallTimerInterval);
   const $o = document.getElementById("overallTimer");
   const total = 45 * 60;
+  let toldAboutOvertime = false;
   const tick = () => {
     if (!state.startTimestamp) return;
     const e = Math.floor((Date.now() - state.startTimestamp) / 1000);
-    const r = Math.max(0, total - e);
-    const mm = Math.floor(r / 60), ss = r % 60;
-    $o.textContent = String(mm).padStart(2,"0") + ":" + String(ss).padStart(2,"0");
+    if (e <= total) {
+      const r = total - e;
+      const mm = Math.floor(r / 60), ss = r % 60;
+      $o.textContent = String(mm).padStart(2,"0") + ":" + String(ss).padStart(2,"0");
+      $o.classList.remove("overtime");
+    } else {
+      const over = e - total;
+      const mm = Math.floor(over / 60), ss = over % 60;
+      $o.textContent = "OVERTIME +" + String(mm).padStart(2,"0") + ":" + String(ss).padStart(2,"0");
+      $o.classList.add("overtime");
+      if (!toldAboutOvertime) {
+        toldAboutOvertime = true;
+        toast("☕ Coffee's cold — Sarah just walked into the Board call", "warn");
+      }
+    }
   };
   tick();
   overallTimerInterval = setInterval(tick, 1000);
@@ -1022,15 +1038,15 @@ function computeScore() {
   // Hints — 1 pt each penalty
   const hintsCount = Object.values(state.hintsUsed).filter(Boolean).length;
   b.hintPenalty = hintsCount;
-  // Total — out of 75 (35 questions + 5 bonus + 20 eggs + 15 memo) minus hints
-  // 7 mcq × 5 = 35
-  // bonus 5
-  // eggs 20
-  // memo 15
-  // = 75 max
-  const total = Math.max(0, b.questions + b.allMcqBonus + b.eggs + b.memo - b.hintPenalty);
+  // Sub-45 coffee bonus — finish under 45:00 → +5
+  const elapsedSec = state.startTimestamp ? Math.floor((Date.now() - state.startTimestamp) / 1000) : 0;
+  b.elapsedSec = elapsedSec;
+  b.subFortyFiveBonus = elapsedSec > 0 && elapsedSec <= 45 * 60 ? 5 : 0;
+  // Total — out of 80 (35 questions + 5 bonus + 20 eggs + 15 memo + 5 sub-45) minus hints
+  const total = Math.max(0, b.questions + b.allMcqBonus + b.eggs + b.memo + b.subFortyFiveBonus - b.hintPenalty);
   state.finalScore = total;
-  state.coffeeScore = Math.round((total / 75) * 100) / 10;
+  state.elapsedSec = elapsedSec;
+  state.coffeeScore = Math.round((total / 80) * 100) / 10;
   state.breakdown = b;
   state.qResults = qResults;
 }
@@ -1057,14 +1073,23 @@ function renderScore() {
   const tier = tierFor(state.coffeeScore);
   const total = state.finalScore;
 
+  const elapsed = state.elapsedSec || 0;
+  const fmm = Math.floor(elapsed / 60), fss = elapsed % 60;
+  const finishTimeStr = String(fmm).padStart(2,"0") + ":" + String(fss).padStart(2,"0");
+  const inTime = elapsed > 0 && elapsed <= 45 * 60;
+  const finishLabel = inTime
+    ? `Finished in ${finishTimeStr} · ☕ under the wire`
+    : `Finished in ${finishTimeStr} · ${Math.floor((elapsed - 45*60)/60)}m over · coffee got cold`;
+
   let html = `<div class="score-hero">
     <div class="cup-stack">${tier.icon}</div>
     <h1>${escapeHtml(state.teamName || "Team")}</h1>
     <p class="team-name">Before the Coffee Gets Cold · final tally</p>
     <div class="coffee-score">${state.coffeeScore.toFixed(1)}</div>
-    <div class="of">/ 10 ☕ · raw ${total} / 75</div>
+    <div class="of">/ 10 ☕ · raw ${total} / 80</div>
     <div class="tier-name">${tier.label}</div>
     <div class="signoff">${escapeHtml(tier.signoff)}</div>
+    <div style="margin-top:14px;font-size:12px;color:var(--coffee-4);font-family:ui-monospace,monospace;">${escapeHtml(finishLabel)}</div>
   </div>`;
 
   // Breakdown
@@ -1073,6 +1098,7 @@ function renderScore() {
   html += scoreRow("All MCQs answered (bonus)", b.allMcqBonus, 5);
   html += scoreRow("Easter eggs found (4 × 5)", b.eggs, 20);
   html += scoreRow("Memo quality (keyword + length)", b.memo, 15);
+  html += scoreRow("Sub-45-minute coffee bonus", b.subFortyFiveBonus, 5);
   if (b.hintPenalty > 0) {
     html += `<div class="score-row"><span class="label">Nudges taken (−1 pt each)</span><span class="pts penalty">−${b.hintPenalty}</span></div>`;
   }
