@@ -509,12 +509,12 @@ const ROOM_FLOW = [
             text: "Whose name is on the leaked memo?",
             choices: [
               { id: "a", label: "Dr. Marcus Webb" },
-              { id: "b", label: "Elena Cortez" },
-              { id: "c", label: "Richard Hsu" },
+              { id: "b", label: "Jake Morrison" },
+              { id: "c", label: "Elena Vasquez" },
               { id: "d", label: "Charlotte Webb" }
             ],
             correct: "a",
-            truth: "Dr. Marcus Webb's March 2024 memo to NovaTech's Product Safety Committee (DOC_0520) is the document that leaked. It first surfaced on Reddit in March 2024 and was obtained by FT journalist Charlotte Webb in September 2024 — the shared surname is the trap."
+            truth: "Dr. Marcus Webb's March 2024 memo to NovaTech's Product Safety Committee — ENG-MEMO-2024-0003 (DOC_0094) — is the document that leaked. Jake Morrison is the subject of the internal leak investigation (DOC_0413 / DOC_0418) — he sent a related Pulse X document to his personal Gmail and was the prime suspect for the Reddit post; easy to mistake for the author. Elena Vasquez is VP Product, the recipient and manager throughout the email chain; her name is everywhere but she didn't write the memo. Charlotte Webb is the FT journalist who obtained it in September 2024 — the shared surname with Marcus is the trap."
           },
           {
             id: "q2", type: "mcq",
@@ -526,7 +526,7 @@ const ROOM_FLOW = [
               { id: "d", label: "March 2024" }
             ],
             correct: "a",
-            truth: "Handwritten lab notes (DOC_0302) date to 12 December 2023. The first email is 22 January; Elena's Board prep claims February. The official narrative was compressed by ~2 months."
+            truth: "Handwritten lab notes (DOC_0302) date to December 2023. Marcus's own memo (DOC_0094) confirms he first communicated concerns to VP Product Elena Vasquez on 22 January 2024 — formal Committee submission delayed to 25 March 2024. The Charter required 5-business-day reporting; Marcus took responsibility for the delay (rationale: complete picture before submission)."
           },
           {
             id: "qLeak", type: "mcq",
@@ -538,7 +538,7 @@ const ROOM_FLOW = [
               { id: "d", label: "NovaTech's own investor-relations site" }
             ],
             correct: "b",
-            truth: "The memo first surfaced as a screenshot on Reddit in March 2024 (DOC_0159, the leaked-screenshot egg). It then circulated on a Chinese-language tech forum (DOC_0301 / 0308 reference it). Charlotte Webb at the FT picked it up much later — September 2024 — and is the public-facing journalist now, but she did not break it. The Reddit post is patient zero."
+            truth: "The memo first surfaced as a screenshot on Reddit (r/wearabletech) on 10 March 2024 — captured by NovaTech before it was deleted (DOC_0159). Sarah Chen's internal leak risk assessment (DOC_0025) documents both the Reddit incident and a separate Verge journalist's inside-source claim. The Shenzhen factory's internal Chinese-language quality report (DOC_0301 / DOC_0308) is a related foreign-language artefact in the matter. Charlotte Webb at the FT picked the memo up in September 2024 — six months after the Reddit post. The Reddit post is patient zero, not the FT."
           }
         ]
       },
@@ -551,19 +551,19 @@ const ROOM_FLOW = [
         questions: [
           {
             id: "q3", type: "mcq",
-            text: "Was the Board's decision to launch Pulse X actually unanimous?",
+            text: "Was the Product Safety Committee's decision to approve Pulse X for launch actually unanimous?",
             choices: [
-              { id: "a", label: "Yes — 5-0 unanimous, signed off in February" },
+              { id: "a", label: "Yes — unanimous on a conditional approval; Roberto's QA conditions baked into the resolution" },
               { id: "b", label: "No — 4-1 with Roberto's dissent on the record" },
-              { id: "c", label: "No — Roberto raised reservations the night before but it was never formally tabled" },
-              { id: "d", label: "No — Linda dissented, not Roberto" }
+              { id: "c", label: "No — Roberto raised reservations the night before but they were never tabled" },
+              { id: "d", label: "Yes — 5-0 unanimous, no conditions" }
             ],
-            correct: "c",
-            truth: "DOC_0503: Roberto emailed Linda the night before with three reservations. DOC_0504: Linda replied 'a 4-1 dissent is better than a 5-0 that papers over concerns' — but it was never tabled. The official record reads as unanimous."
+            correct: "a",
+            truth: "The 28 March 2024 PSC vote (DOC_0071) was unanimous on a conditional approval. Roberto Fuentes had emailed Chair Linda Park the night before with three written reservations (DOC_0503); Linda's reply (DOC_0504) — 'a 4-1 vote with a recorded dissent is better than a 5-0 that papers over concerns' — encouraged him to vote his conscience. He did. The PSC resolution conditioned launch on (a) Project Orion validation, (b) Roberto's formal QA sign-off, (c) updated GlobalTest testing with v2.4 firmware, (d) updated documentation. The June 2024 final launch sign-off (DOC_0362) was 5-0 unanimous after all conditions were met."
           },
           {
             id: "q4", type: "mcq",
-            text: "What risk rating actually went into the Board pack?",
+            text: "What risk rating actually went into the Board pack on product performance?",
             choices: [
               { id: "a", label: "HIGH" },
               { id: "b", label: "MODERATE-HIGH" },
@@ -571,12 +571,12 @@ const ROOM_FLOW = [
               { id: "d", label: "LOW" }
             ],
             correct: "b",
-            truth: "DOC_0509: the draft risk rating was HIGH. Elena asked Marcus to change it — 'the Board will read HIGH as a red flag.' The pack went out as MODERATE-HIGH."
+            truth: "Marcus's draft v2 of the memo (DOC_0509) had product-performance risk = HIGH. Elena's handwritten margin note asked to soften it: 'the Board will read HIGH as a red flag.' Marcus agreed to change it to MODERATE-HIGH — but stated explicitly in writing that the change was driven by Project Orion mitigation data, not optics. He refused Elena's separate request to lower commercial risk (kept at HIGH). The final memo (DOC_0094, ENG-MEMO-2024-0003) carries product-performance risk MODERATE-HIGH and commercial risk HIGH."
           },
           {
             id: "eggs1", type: "egg-sweep",
             text: "Did you spot the \"extra sugar\" in the coffee?",
-            footnote: "☕ Each DOC ID earns an extra shot of points",
+            footnote: "☕ One point each — describe what you spotted OR drop the DOC ID. Either earns the shot.",
             rows: [
               { id: "eggs1-foreign", hint: "The strongest blend in that room was not brewed in English.", placeholder: "DOC ID + one line on what you spotted" },
               { id: "eggs1-handwriting", hint: "Not everything was ground through a keyboard.", placeholder: "DOC ID + one line on what you spotted" },
@@ -616,7 +616,7 @@ const ROOM_FLOW = [
           {
             id: "eggs2", type: "egg-sweep",
             text: "Did you spot the \"extra sugar\" in the coffee?",
-            footnote: "☕ Each DOC ID earns an extra shot of points",
+            footnote: "☕ One point each — describe what you spotted OR drop the DOC ID. Either earns the shot.",
             rows: [
               { id: "eggs2-audio", hint: "Some of the most important things were said out loud, not poured onto paper.", placeholder: "DOC ID + one line on what you spotted" },
               { id: "eggs2-template", hint: "I would not start the memo from an empty cup.", placeholder: "DOC ID + one line on what you spotted" }
@@ -643,13 +643,13 @@ const ROOM_FLOW = [
             id: "q6", type: "mcq",
             text: "Does Pulse X meet the IEC 62368-1 safety standard?",
             choices: [
-              { id: "a", label: "Yes — passed certification (DOC_0519); small print: standard wasn't designed for 24/7 wearables" },
+              { id: "a", label: "Yes — passed certification (DOC_0511); small print: standard wasn't designed for 24/7 wearables" },
               { id: "b", label: "Partially — meets baseline thermal limits but not the supplementary clauses" },
               { id: "c", label: "No — fails on §5.4 (thermal energy limits)" },
               { id: "d", label: "The standard does not apply to this product class" }
             ],
             correct: "a",
-            truth: "Pulse X passed IEC 62368-1 certification (DOC_0519). The thermal issue is a known-issue note inside the engineering team, not a standards failure. The small-print catch is that 62368-1 wasn't designed for 24/7 wearables — Meridian (DOC_0524) is privately asking exactly that question."
+            truth: "Pulse X passed IEC 62368-1 certification — confirmed in GlobalTest's cover letter (DOC_0511) which separately flags that the standard was written for audio/video and IT equipment, not for 24/7 skin-contact wearables. The thermal issue is a known finding within safety limits, mitigated by Project Orion firmware. Sarah's own privileged notes (DOC_0510) make the same point: the device meets the 48°C IEC limit at 43.7°C, but the standard's fit for a 24/7 wearable is the question a hostile reading would press."
           },
           {
             id: "q7", type: "mcq",
@@ -661,7 +661,7 @@ const ROOM_FLOW = [
               { id: "d", label: "Cannot tell from the documents" }
             ],
             correct: "c",
-            truth: "Legal exposure is LOW. Governance worked formally — Product Safety Committee reviewed (DOC_0520), Board approved launch (DOC_0529), risk rating disclosed, regulator informed. Sarah's own notes (DOC_0526 — 'NovaTech Knew') confirm the gap is reputational, not legal."
+            truth: "Legal exposure is LOW. Governance worked: Product Safety Committee reviewed (DOC_0071, conditional unanimous approval), final launch sign-off was 5-0 (DOC_0362), GlobalTest re-tested with v2.4 firmware. Sarah's own privileged notes (DOC_0510) — 'I can see the headline: NovaTech Knew' — confirm the risk is reputational, not legal. The CNBC interview coaching audio (DOC_0501) and Richard's own follow-up note to Sarah (DOC_0507) are the documents most exposed to a hostile reading."
           },
         ]
       }
@@ -672,21 +672,21 @@ const ROOM_FLOW = [
 // Easter-egg scoring (against accumulated text from all egg-sweep + text fields)
 // Each egg = 3 base pts for spotting it (any topic keyword) + 2 bonus pts for citing the canonical DOC ID = 5 pts max.
 const EGG_KEYWORDS = [
-  { id:"egg-foreign",    label:"Foreign-language doc",        feature:"DeepL",
-    coreKws:["chinese","mandarin","french","german","translat","deepl","非英"],
-    docIds:["0301","0308"], canonical:"DOC_0301 / DOC_0308",
+  { id:"egg-foreign",    label:"Foreign-language doc",        feature:"Translation",
+    coreKws:["chinese","mandarin","shenzhen","factory","quality report","translat","非英","质量"],
+    docIds:["0301","0308"], canonical:"DOC_0301 / DOC_0308 (Shenzhen factory Chinese-language quality report)",
     basePts:3, bonusPts:2 },
   { id:"egg-handwriting",label:"Handwritten material",        feature:"Handwriting OCR",
     coreKws:["handwrit","hand writ","scan","notebook","margin","scribble","lab notes"],
-    docIds:["0302","0306"], canonical:"DOC_0302 / DOC_0306",
+    docIds:["0302","0306"], canonical:"DOC_0302 / DOC_0306 (Marcus's handwritten lab notes, December 2023)",
     basePts:3, bonusPts:2 },
-  { id:"egg-image",      label:"Reddit / leaked screenshot",  feature:"Image OCR",
-    coreKws:["reddit","screenshot","image","ocr","leak","forum","thread"],
-    docIds:["0159"], canonical:"DOC_0159",
+  { id:"egg-image",      label:"Reddit screenshot",           feature:"Image OCR",
+    coreKws:["reddit","screenshot","image","ocr","leak","forum","thread","wearabletech"],
+    docIds:["0159"], canonical:"DOC_0159 (Reddit r/wearabletech screenshot, captured before deletion)",
     basePts:3, bonusPts:2 },
-  { id:"egg-audio",      label:"Audio file transcribed",      feature:"Audio Transcription",
-    coreKws:["audio","voicemail","mp3","transcrib","voice","recording","podcast"],
-    docIds:["0501"], canonical:"DOC_0501",
+  { id:"egg-audio",      label:"Audio recording transcribed", feature:"Audio Transcription",
+    coreKws:["audio","voicemail","mp3","m4a","transcrib","voice","recording","cnbc","coach","rehears"],
+    docIds:["0501"], canonical:"DOC_0501 (CNBC interview coaching session audio)",
     basePts:3, bonusPts:2 }
 ];
 
