@@ -131,6 +131,21 @@ button { font-family: inherit; }
 .hint-btn { background: transparent; color: var(--coffee-2); border: 1px dashed var(--coffee-3); padding: 8px 14px; border-radius: 8px; font-size: 12.5px; cursor: pointer; font-weight: 500; }
 .hint-btn:hover { background: var(--cream); }
 .hint-btn .cost { background: var(--coffee-2); color: var(--cream); padding: 1px 7px; border-radius: 99px; font-size: 10px; font-weight: 600; margin-left: 6px; }
+.edit-pop-block { margin-top: 14px; padding: 12px 14px; background: var(--cream); border: 1px dashed var(--coffee-3); border-radius: 10px; }
+.edit-pop-block .edit-pop-label { font-size: 12.5px; color: var(--coffee-2); margin-bottom: 8px; font-style: italic; }
+.edit-pop-btn { background: transparent; color: var(--coffee-1); border: 1px solid var(--coffee-3); padding: 8px 14px; border-radius: 8px; font-size: 12.5px; cursor: pointer; font-weight: 500; margin-right: 8px; }
+.edit-pop-btn:hover { background: var(--paper); }
+.edit-pop-btn .cost { background: var(--coffee-2); color: var(--cream); padding: 1px 7px; border-radius: 99px; font-size: 10px; font-weight: 600; margin-left: 6px; }
+.upload-still-open { display: inline-block; margin-left: 8px; padding: 2px 8px; background: var(--legora-light); color: var(--legora); border: 1px solid #BBF7D0; border-radius: 99px; font-size: 11px; font-weight: 600; letter-spacing: .02em; }
+.final-submit-banner { position: sticky; bottom: 12px; margin-top: 18px; background: var(--legora-light); border: 2px solid var(--legora); border-radius: 14px; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 8px 24px rgba(0,82,48,.16); flex-wrap: wrap; z-index: 5; }
+.final-submit-banner .msg { flex: 1; min-width: 220px; font-size: 14px; color: var(--coffee-1); }
+.final-submit-banner .msg strong { color: var(--legora); }
+.final-submit-banner .submit-btn { background: var(--legora); color: #fff; border: none; padding: 14px 32px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; letter-spacing: .03em; }
+.final-submit-banner .submit-btn:hover { background: var(--legora-dark); }
+.restart-row { text-align: center; margin: 36px 0 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.restart-link { background: transparent; border: none; color: var(--coffee-2); font-size: 13px; letter-spacing: .03em; cursor: pointer; padding: 8px 14px; opacity: 0.85; transition: opacity .15s, color .15s; font-family: inherit; font-weight: 500; }
+.restart-link:hover { opacity: 1; color: var(--coffee-1); text-decoration: underline; }
+.restart-sep { color: var(--ink-muted); opacity: 0.5; font-size: 12px; margin: 0 6px; }
 .hint-revealed { background: var(--legora-light); border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-top: 10px; font-size: 13px; color: var(--legora); }
 
 /* UPLOAD */
@@ -160,6 +175,14 @@ button { font-family: inherit; }
 .modal .choice input { margin-top: 3px; flex-shrink: 0; accent-color: var(--legora); }
 .modal textarea { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; font-family: inherit; resize: vertical; line-height: 1.55; min-height: 80px; }
 .modal textarea:focus { outline: 2px solid var(--legora); outline-offset: 1px; border-color: var(--legora); }
+.modal input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-family: inherit; background: var(--paper); color: var(--ink); }
+.modal input[type="text"]:focus { outline: 2px solid var(--legora); outline-offset: 1px; border-color: var(--legora); }
+.modal .egg-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--cream); margin-bottom: 8px; }
+.modal .egg-row .egg-clue { font-size: 12.5px; color: var(--coffee-1); font-style: italic; line-height: 1.45; }
+.modal .egg-row .egg-clue::before { content: "☕  "; }
+.modal .egg-row input[type="text"] { width: 100%; box-sizing: border-box; }
+.modal .egg-footnote { font-size: 15px; color: var(--coffee-1); margin-top: 12px; font-weight: 600; letter-spacing: .01em; padding: 10px 14px; background: var(--legora-light); border-left: 3px solid var(--legora); border-radius: 0 8px 8px 0; }
+@media (max-width: 540px) { .modal .egg-row { grid-template-columns: 1fr; } }
 .modal .modal-actions { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; }
 
 /* SCORE */
@@ -281,8 +304,8 @@ button { font-family: inherit; }
       </div>
 
       <div class="field" style="margin-top:18px;">
-        <label for="teamName">Your name or team name <span style="color:var(--ink-muted);">(optional)</span></label>
-        <input type="text" id="teamName" placeholder="e.g. Latham Belgravia" maxlength="60" />
+        <label for="teamName">Your name or team name <span style="color:var(--coffee-2);">(required)</span></label>
+        <input type="text" id="teamName" placeholder="e.g. Latham Belgravia" maxlength="60" required />
       </div>
       <div class="field">
         <label for="email">Email <span style="color:var(--ink-muted);">(optional)</span></label>
@@ -432,6 +455,14 @@ button { font-family: inherit; }
         <div id="hint-3"></div>
       </div>
     </div>
+
+    <div class="restart-row">
+      <button class="restart-link" id="restartRoomBtn" title="Restart the current room — fresh timer, clears just this room's answers">↻ restart this room</button>
+      <span class="restart-sep">·</span>
+      <button class="restart-link" id="pauseResumeBtn" title="Pause or resume the timers">⏸ pause</button>
+      <span class="restart-sep">·</span>
+      <button class="restart-link" id="restartGameBtn" title="Wipe everything and start over from the welcome screen">↺ start over from the beginning</button>
+    </div>
   </div>
 
   <!-- ============================================
@@ -471,19 +502,19 @@ const ROOM_FLOW = [
         triggerAtSec: 10 * 60,
         modalTag: "☎  Sarah is ringing",
         title: "She needs to know immediately",
-        sub: "Pick up. Two questions only — then back to digging. The timer keeps running.",
+        sub: "Pick up. Three quick ones — then back to digging. The timer keeps running.",
         questions: [
           {
             id: "q1", type: "mcq",
-            text: "Who wrote the leaked memo?",
+            text: "Whose name is on the leaked memo?",
             choices: [
-              { id: "a", label: "Dr. Marcus Webb — author of the March 2024 Product Safety Committee memo" },
-              { id: "b", label: "Elena Cortez — pushed for the risk rating change" },
-              { id: "c", label: "Richard — the CEO who did the CNBC interview" },
-              { id: "d", label: "Charlotte Webb — the FT journalist" }
+              { id: "a", label: "Dr. Marcus Webb" },
+              { id: "b", label: "Elena Cortez" },
+              { id: "c", label: "Richard Hsu" },
+              { id: "d", label: "Charlotte Webb" }
             ],
             correct: "a",
-            truth: "Dr. Marcus Webb's March 2024 memo to NovaTech's Product Safety Committee (DOC_0520) is the document that leaked. It first surfaced on Reddit in March 2024 and was obtained by FT journalist Charlotte Webb in September 2024 — easy to be misled by the shared surname."
+            truth: "Dr. Marcus Webb's March 2024 memo to NovaTech's Product Safety Committee (DOC_0520) is the document that leaked. It first surfaced on Reddit in March 2024 and was obtained by FT journalist Charlotte Webb in September 2024 — the shared surname is the trap."
           },
           {
             id: "q2", type: "mcq",
@@ -496,6 +527,18 @@ const ROOM_FLOW = [
             ],
             correct: "a",
             truth: "Handwritten lab notes (DOC_0302) date to 12 December 2023. The first email is 22 January; Elena's Board prep claims February. The official narrative was compressed by ~2 months."
+          },
+          {
+            id: "qLeak", type: "mcq",
+            text: "Where did the memo first surface in public?",
+            choices: [
+              { id: "a", label: "The Financial Times — Charlotte Webb's piece" },
+              { id: "b", label: "A Reddit thread on r/wearabletech" },
+              { id: "c", label: "A Chinese-language tech forum" },
+              { id: "d", label: "NovaTech's own investor-relations site" }
+            ],
+            correct: "b",
+            truth: "The memo first surfaced as a screenshot on Reddit in March 2024 (DOC_0159, the leaked-screenshot egg). It then circulated on a Chinese-language tech forum (DOC_0301 / 0308 reference it). Charlotte Webb at the FT picked it up much later — September 2024 — and is the public-facing journalist now, but she did not break it. The Reddit post is patient zero."
           }
         ]
       },
@@ -522,8 +565,8 @@ const ROOM_FLOW = [
             id: "q4", type: "mcq",
             text: "What risk rating actually went into the Board pack?",
             choices: [
-              { id: "a", label: "HIGH — as drafted" },
-              { id: "b", label: "MODERATE-HIGH — Elena asked Marcus to change it from HIGH" },
+              { id: "a", label: "HIGH" },
+              { id: "b", label: "MODERATE-HIGH" },
               { id: "c", label: "MODERATE" },
               { id: "d", label: "LOW" }
             ],
@@ -531,8 +574,14 @@ const ROOM_FLOW = [
             truth: "DOC_0509: the draft risk rating was HIGH. Elena asked Marcus to change it — 'the Board will read HIGH as a red flag.' The pack went out as MODERATE-HIGH."
           },
           {
-            id: "eggs1", type: "text",
-            text: "What easter eggs did you find while digging? List the unusual ones — anything not in English, anything not typed, anything circulating online."
+            id: "eggs1", type: "egg-sweep",
+            text: "Did you spot the \"extra sugar\" in the coffee?",
+            footnote: "☕ Each DOC ID earns an extra shot of points",
+            rows: [
+              { id: "eggs1-foreign", hint: "The strongest blend in that room was not brewed in English.", placeholder: "DOC ID + one line on what you spotted" },
+              { id: "eggs1-handwriting", hint: "Not everything was ground through a keyboard.", placeholder: "DOC ID + one line on what you spotted" },
+              { id: "eggs1-image", hint: "The original spill left quite the stain — half the internet has already read it.", placeholder: "DOC ID + one line on what you spotted" }
+            ]
           }
         ]
       }
@@ -565,8 +614,13 @@ const ROOM_FLOW = [
             truth: "Transparent holding statement, brief analysts, notify Meridian, hold detail until the reopened internal investigation closes. Stonewalling and over-disclosing are both worse."
           },
           {
-            id: "eggs2", type: "text",
-            text: "Anything you found while drafting? Audio transcripts, late-discovered docs, citations you used in the memo."
+            id: "eggs2", type: "egg-sweep",
+            text: "Did you spot the \"extra sugar\" in the coffee?",
+            footnote: "☕ Each DOC ID earns an extra shot of points",
+            rows: [
+              { id: "eggs2-audio", hint: "Some of the most important things were said out loud, not poured onto paper.", placeholder: "DOC ID + one line on what you spotted" },
+              { id: "eggs2-template", hint: "I would not start the memo from an empty cup.", placeholder: "DOC ID + one line on what you spotted" }
+            ]
           }
         ]
       }
@@ -583,7 +637,7 @@ const ROOM_FLOW = [
         triggerAtSec: 10 * 60,
         modalTag: "Collect Your Coffee · last call",
         title: "Final answers before the Board call ☕",
-        sub: "Two questions and one last egg sweep.",
+        sub: "Two final questions before the Board call.",
         questions: [
           {
             id: "q6", type: "mcq",
@@ -609,22 +663,31 @@ const ROOM_FLOW = [
             correct: "c",
             truth: "Legal exposure is LOW. Governance worked formally — Product Safety Committee reviewed (DOC_0520), Board approved launch (DOC_0529), risk rating disclosed, regulator informed. Sarah's own notes (DOC_0526 — 'NovaTech Knew') confirm the gap is reputational, not legal."
           },
-          {
-            id: "eggsFinal", type: "text",
-            text: "Last sweep. Anything from the corners you haven't flagged yet? List every doc number / oddity you can recall."
-          }
         ]
       }
     ]
   }
 ];
 
-// Easter-egg keyword scoring (against accumulated text from all the eggs* fields)
+// Easter-egg scoring (against accumulated text from all egg-sweep + text fields)
+// Each egg = 3 base pts for spotting it (any topic keyword) + 2 bonus pts for citing the canonical DOC ID = 5 pts max.
 const EGG_KEYWORDS = [
-  { id:"egg-foreign",    label:"Foreign-language doc found",  feature:"DeepL",              kws:["chinese","mandarin","french","translate","translation","deepl","0301","0308","非英"], pts:5 },
-  { id:"egg-handwriting",label:"Handwritten material found",  feature:"Handwriting OCR",    kws:["handwrit","hand writ","scan","notebook","margin","0302","0306","scribble"], pts:5 },
-  { id:"egg-image",      label:"Reddit / leaked screenshot",  feature:"Image OCR",           kws:["reddit","screenshot","image","ocr","leak","0159","forum","thread"], pts:5 },
-  { id:"egg-audio",      label:"Audio file transcribed",      feature:"Audio Transcription", kws:["audio","voicemail","mp3","transcrib","voice","recording","0501","podcast"], pts:5 }
+  { id:"egg-foreign",    label:"Foreign-language doc",        feature:"DeepL",
+    coreKws:["chinese","mandarin","french","german","translat","deepl","非英"],
+    docIds:["0301","0308"], canonical:"DOC_0301 / DOC_0308",
+    basePts:3, bonusPts:2 },
+  { id:"egg-handwriting",label:"Handwritten material",        feature:"Handwriting OCR",
+    coreKws:["handwrit","hand writ","scan","notebook","margin","scribble","lab notes"],
+    docIds:["0302","0306"], canonical:"DOC_0302 / DOC_0306",
+    basePts:3, bonusPts:2 },
+  { id:"egg-image",      label:"Reddit / leaked screenshot",  feature:"Image OCR",
+    coreKws:["reddit","screenshot","image","ocr","leak","forum","thread"],
+    docIds:["0159"], canonical:"DOC_0159",
+    basePts:3, bonusPts:2 },
+  { id:"egg-audio",      label:"Audio file transcribed",      feature:"Audio Transcription",
+    coreKws:["audio","voicemail","mp3","transcrib","voice","recording","podcast"],
+    docIds:["0501"], canonical:"DOC_0501",
+    basePts:3, bonusPts:2 }
 ];
 
 // Memo keyword scoring
@@ -674,6 +737,7 @@ function defaultState() {
     fileName: "",
     fileBytes: 0,
     memoText: "",
+    pausedAt: null,            // ms wall-clock when paused, null = running
     submitted: false,
     finalScore: 0,
     coffeeScore: 0,
@@ -718,7 +782,15 @@ if (state.teamName) $teamInput.value = state.teamName;
 if (state.email) $emailInput.value = state.email;
 
 document.getElementById("welcomeStart").addEventListener("click", () => {
-  state.teamName = $teamInput.value.trim() || "Anonymous Lawyer";
+  const enteredName = $teamInput.value.trim();
+  if (!enteredName) {
+    toast("Pop your name in before you start ☕", "warn");
+    $teamInput.focus();
+    $teamInput.style.borderColor = "var(--rose)";
+    setTimeout(() => { $teamInput.style.borderColor = ""; }, 2000);
+    return;
+  }
+  state.teamName = enteredName;
   state.email = $emailInput.value.trim();
   // Timer starts the moment they enter the game
   if (!state.started) {
@@ -773,6 +845,82 @@ function initRooms() {
   });
   // File upload
   setupFileUpload();
+  // Tiny "start over" link at the bottom of the rooms stage
+  const restartGameBtn = document.getElementById("restartGameBtn");
+  if (restartGameBtn) restartGameBtn.onclick = () => {
+    if (!confirm("Start over from the welcome screen? The timer resets and everything you've answered will be lost.")) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    location.href = location.pathname;
+  };
+  // "Restart this room" — fresh timer + clear this room's popup answers, prior rooms preserved
+  const restartRoomBtn = document.getElementById("restartRoomBtn");
+  if (restartRoomBtn) restartRoomBtn.onclick = () => {
+    const cur = currentRoom();
+    if (!cur) return;
+    if (!confirm(`Restart ${cur.label}? The timer for this room resets and any answers you've given in this room are cleared. Earlier rooms are kept.`)) return;
+    // Clear popup-answered marks + answers for this room's questions
+    cur.popups.forEach(p => {
+      delete state.popupAnsweredAt[p.id];
+      p.questions.forEach(q => {
+        if (q.type === "egg-sweep") {
+          (q.rows || []).forEach(row => { delete state.answers[row.id]; });
+        } else {
+          delete state.answers[q.id];
+        }
+      });
+    });
+    // Reset this room's timer start
+    delete state.roomTimersStarted[cur.id];
+    saveState();
+    // If a final-submit banner is showing, drop it (we are no longer "all done")
+    const banner = document.getElementById("finalSubmitBanner");
+    if (banner) banner.remove();
+    // Restart the room's timer from full
+    startCurrentRoomTimer();
+    document.getElementById("room-" + cur.id).scrollIntoView({ behavior: "smooth", block: "center" });
+    toast(`${cur.label} restarted ☕ — fresh timer`, "coffee");
+  };
+  // "Pause / resume" toggle — freezes both the per-room timer and the overall timer
+  const pauseResumeBtn = document.getElementById("pauseResumeBtn");
+  if (pauseResumeBtn) {
+    syncPauseResumeLabel();
+    pauseResumeBtn.onclick = () => {
+      if (state.pausedAt) {
+        // Resume — shift all wall-clock anchors forward by the paused duration
+        const offset = Date.now() - state.pausedAt;
+        if (state.startTimestamp) state.startTimestamp += offset;
+        Object.keys(state.roomTimersStarted).forEach(rid => {
+          state.roomTimersStarted[rid] += offset;
+        });
+        state.pausedAt = null;
+        saveState();
+        startCurrentRoomTimer();
+        startOverallTimer();
+        toast("☕ Back on the clock", "success");
+      } else {
+        // Pause — freeze the timers; player can resume at will
+        state.pausedAt = Date.now();
+        saveState();
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        if (overallTimerInterval) { clearInterval(overallTimerInterval); overallTimerInterval = null; }
+        toast("⏸ Paused — coffee on hold", "coffee");
+      }
+      syncPauseResumeLabel();
+    };
+  }
+  // If we're returning to the rooms stage with a saved pause state, leave timers stopped
+  if (state.pausedAt) {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    if (overallTimerInterval) { clearInterval(overallTimerInterval); overallTimerInterval = null; }
+  }
+  // If Room 2 is already done on resume, surface the upload-stays-open badge
+  if (state.currentRoomIdx > 1 && ROOM_FLOW.find(r => r.requiresMemo)) markUploadStaysOpen();
+  // If all rooms answered on resume, surface the final submit banner
+  const allFinalAnswered = ROOM_FLOW.every(r => {
+    const lastPopup = r.popups[r.popups.length - 1];
+    return state.popupAnsweredAt[lastPopup.id];
+  });
+  if (allFinalAnswered && !state.submitted) showFinalSubmitBanner();
   // Start ticking the active room
   startCurrentRoomTimer();
   startOverallTimer();
@@ -888,26 +1036,38 @@ function setupFileUpload() {
 // ====================================================
 // POPUP
 // ====================================================
-function fireRoomPopup(roomId, popupId) {
+function fireRoomPopup(roomId, popupId, force) {
   const room = ROOM_FLOW.find(r => r.id === roomId);
   if (!room) return;
   const popup = room.popups.find(p => p.id === popupId);
   if (!popup) return;
-  if (state.popupAnsweredAt[popupId]) return;
+  if (!force && state.popupAnsweredAt[popupId]) return;
   const isFinal = popup === room.popups[room.popups.length - 1];
-  // Memo gate only on Room 2's final popup
-  if (isFinal && room.requiresMemo && !state.fileName) {
-    if (!confirm("You haven't uploaded a memo yet. Continue without it? You'll lose memo points.")) return;
+  // Memo gate only on Room 2's final popup, and only on first close (not re-edits)
+  if (isFinal && room.requiresMemo && !state.fileName && !force) {
+    if (!confirm("You haven't uploaded a memo yet. Continue without it? You'll lose memo points. (You can still upload after this — the upload stays open.)")) return;
   }
-  renderModal(room, popup, isFinal);
+  renderModal(room, popup, isFinal, !!force);
   document.getElementById("modalBackdrop").classList.add("show");
 }
 
-function renderModal(room, popup, isFinal) {
+function reopenPopup(roomId, popupId) {
+  fireRoomPopup(roomId, popupId, true);
+}
+
+function syncPauseResumeLabel() {
+  const btn = document.getElementById("pauseResumeBtn");
+  if (!btn) return;
+  btn.textContent = state.pausedAt ? "▶ resume" : "⏸ pause";
+}
+
+// Review buttons live only in the final-submit banner — nothing per-room.
+
+function renderModal(room, popup, isFinal, isReopen) {
   const $c = document.getElementById("modalContent");
-  let html = `<div class="modal-tag">${escapeHtml(popup.modalTag || room.label)}</div>`;
+  let html = `<div class="modal-tag">${escapeHtml(popup.modalTag || room.label)}${isReopen ? " · re-edit" : ""}</div>`;
   html += `<h2>${escapeHtml(popup.title || "Check-in")}</h2>`;
-  html += `<p class="modal-sub">${escapeHtml(popup.sub || "")}</p>`;
+  html += `<p class="modal-sub">${isReopen ? "Review and edit your answers — change anything you like, then save." : escapeHtml(popup.sub || "")}</p>`;
   popup.questions.forEach((q, i) => {
     html += `<div class="q-block" data-qid="${q.id}">`;
     html += `<div class="q-text">${i+1}. ${escapeHtml(q.text)}</div>`;
@@ -923,11 +1083,21 @@ function renderModal(room, popup, isFinal) {
       html += `</div>`;
     } else if (q.type === "text") {
       const cur = state.answers[q.id] || "";
-      html += `<textarea data-q="${q.id}" placeholder="What did you find?">${escapeHtml(cur)}</textarea>`;
+      const ph = q.placeholder || "What did you find?";
+      html += `<textarea data-q="${q.id}" rows="4" placeholder="${escapeHtml(ph)}">${escapeHtml(cur)}</textarea>`;
+    } else if (q.type === "egg-sweep") {
+      (q.rows || []).forEach(row => {
+        const cur = state.answers[row.id] || "";
+        html += `<div class="egg-row">`;
+        html += `<div class="egg-clue">${escapeHtml(row.hint)}</div>`;
+        html += `<input type="text" data-q="${row.id}" placeholder="${escapeHtml(row.placeholder || "What did you spot?")}" value="${escapeHtml(cur)}">`;
+        html += `</div>`;
+      });
+      if (q.footnote) html += `<div class="egg-footnote">${escapeHtml(q.footnote)}</div>`;
     }
     html += `</div>`;
   });
-  const submitLabel = isFinal ? "Serve it up ☕" : "Tell Sarah → back to the grind";
+  const submitLabel = isReopen ? "Save changes ☕" : (isFinal ? "Serve it up ☕" : "Tell Sarah → back to the grind");
   html += `<div class="modal-actions">`;
   html += `<button class="btn-ghost" id="modalCancel">Wait, let me think</button>`;
   html += `<button class="btn" id="modalSubmit">${submitLabel}</button>`;
@@ -946,6 +1116,9 @@ function renderModal(room, popup, isFinal) {
   $c.querySelectorAll("textarea[data-q]").forEach(t => {
     t.oninput = () => { state.answers[t.dataset.q] = t.value; saveState(); };
   });
+  $c.querySelectorAll("input[type=\"text\"][data-q]").forEach(inp => {
+    inp.oninput = () => { state.answers[inp.dataset.q] = inp.value; saveState(); };
+  });
   document.getElementById("modalCancel").onclick = () => {
     document.getElementById("modalBackdrop").classList.remove("show");
   };
@@ -961,9 +1134,19 @@ function closePopup(roomId, popupId) {
     toast("Pick an answer for every multiple-choice question first", "warn");
     return;
   }
+  // Detect re-edit: if this popup was already answered before, just save + close
+  const isReopen = !!state.popupAnsweredAt[popupId];
   state.popupAnsweredAt[popupId] = Date.now();
   saveState();
   document.getElementById("modalBackdrop").classList.remove("show");
+
+  if (isReopen) {
+    // Re-edit pass — answers updated, no room advance, no penalty
+    toast("Edits saved ☕", "success");
+    // Re-render the banner so the buttons reflect the latest state
+    if (document.getElementById("finalSubmitBanner")) showFinalSubmitBanner(true);
+    return;
+  }
 
   const isFinal = popup === room.popups[room.popups.length - 1];
   if (!isFinal) {
@@ -977,6 +1160,8 @@ function closePopup(roomId, popupId) {
   document.getElementById("room-" + roomId).classList.add("done");
   document.getElementById("timer-" + roomId).classList.remove("running","warn","danger");
   document.getElementById("timer-" + roomId).classList.add("done");
+  // Surface the still-open upload badge for Room 2 once done
+  if (room.requiresMemo) markUploadStaysOpen();
   if (idx + 1 < ROOM_FLOW.length) {
     state.currentRoomIdx = idx + 1;
     saveState();
@@ -988,16 +1173,88 @@ function closePopup(roomId, popupId) {
     nextCard.scrollIntoView({ behavior: "smooth", block: "center" });
     toast(`${next.label} unlocked · ${Math.floor(next.timerSec/60)} min on the clock`, "success");
   } else {
-    finishGame();
+    // All rooms done — surface the Submit Final banner instead of auto-finishing
+    showFinalSubmitBanner();
+    toast("All rooms done ☕ — review anything you want, then click Submit Final", "success");
   }
+}
+
+function showFinalSubmitBanner(rerender) {
+  const stage = document.getElementById("stage-rooms");
+  if (!stage) return;
+  let banner = document.getElementById("finalSubmitBanner");
+  if (banner && !rerender) return;
+  if (banner) banner.remove();
+  banner = document.createElement("div");
+  banner.id = "finalSubmitBanner";
+  banner.className = "final-submit-banner";
+  // Build the review buttons — one per answered popup across all rooms
+  let reviewBtns = "";
+  ROOM_FLOW.forEach(r => {
+    r.popups.forEach(p => {
+      if (!state.popupAnsweredAt[p.id]) return;
+      const isOnly = r.popups.length === 1;
+      const isFirst = p === r.popups[0];
+      const lbl = isOnly ? `Review ${r.label.replace(/^Room \d+ · /, "Room " + r.id + " — ")}`
+                  : (isFirst ? `Review Room ${r.id} — early answers` : `Review Room ${r.id} — final answers`);
+      reviewBtns += `<button class="edit-pop-btn" data-roomid="${r.id}" data-popid="${p.id}">${lbl}</button>`;
+    });
+  });
+  banner.innerHTML = `
+    <div class="msg" style="flex-basis:100%;">
+      <strong>All three rooms done.</strong> Want to change an answer before you lock it in? Click any room below to re-open it — free, no penalty. When you're happy, hit Submit.
+    </div>
+    <div class="edit-pop-block" style="flex-basis:100%; margin-top:0; background:transparent; border:none; padding:0;">
+      ${reviewBtns}
+    </div>
+    <div style="flex-basis:100%; display:flex; justify-content:flex-end;">
+      <button class="submit-btn" id="finalSubmitBtn">Submit final answers ☕</button>
+    </div>
+  `;
+  stage.appendChild(banner);
+  banner.querySelectorAll(".edit-pop-btn").forEach(b => {
+    b.addEventListener("click", () => reopenPopup(b.dataset.roomid, b.dataset.popid));
+  });
+  document.getElementById("finalSubmitBtn").onclick = () => {
+    if (!confirm("Submit your final answers? You will not be able to edit after this.")) return;
+    finishGame();
+  };
+  if (!rerender) banner.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function markUploadStaysOpen() {
+  const card = document.getElementById("uploadCard");
+  if (!card) return;
+  if (card.querySelector(".upload-still-open")) return;
+  const title = card.querySelector(".title");
+  if (title) {
+    const badge = document.createElement("span");
+    badge.className = "upload-still-open";
+    badge.textContent = "Still open · upload anytime";
+    title.appendChild(badge);
+  }
+  // Surface a small reminder underneath
+  const note = document.createElement("div");
+  note.style.cssText = "margin-top:8px; font-size:12px; color:var(--coffee-2); font-style:italic;";
+  note.textContent = "The upload stays open even if the timer runs out. Drop the memo in whenever you have it.";
+  card.appendChild(note);
 }
 
 // ====================================================
 // SCORING
 // ====================================================
 function eggsCombinedText() {
-  return [state.answers.eggs1, state.answers.eggs2, state.answers.eggsFinal]
-    .filter(Boolean).join(" \n ").toLowerCase();
+  const parts = [];
+  ROOM_FLOW.forEach(r => r.popups.forEach(p => p.questions.forEach(q => {
+    if (q.type === "text") {
+      if (state.answers[q.id]) parts.push(state.answers[q.id]);
+    } else if (q.type === "egg-sweep") {
+      (q.rows || []).forEach(row => {
+        if (state.answers[row.id]) parts.push(state.answers[row.id]);
+      });
+    }
+  })));
+  return parts.join(" \n ").toLowerCase();
 }
 
 function scoreEggs() {
@@ -1005,8 +1262,15 @@ function scoreEggs() {
   const found = [];
   let pts = 0;
   EGG_KEYWORDS.forEach(e => {
-    const hit = e.kws.some(k => text.includes(k));
-    if (hit) { pts += e.pts; found.push(e); }
+    const baseHit = (e.coreKws || []).some(k => text.includes(k));
+    const docHit = (e.docIds || []).some(d => text.includes(d));
+    if (baseHit || docHit) {
+      let earned = 0;
+      if (baseHit) earned += e.basePts;
+      if (docHit) earned += e.bonusPts;
+      pts += earned;
+      found.push({ ...e, baseHit, docHit, earned });
+    }
   });
   return { pts, found };
 }
@@ -1057,11 +1321,44 @@ function computeScore() {
   const elapsedSec = state.startTimestamp ? Math.floor((Date.now() - state.startTimestamp) / 1000) : 0;
   b.elapsedSec = elapsedSec;
   b.subFortyFiveBonus = elapsedSec > 0 && elapsedSec <= 45 * 60 ? 5 : 0;
-  // Total — out of 80 (35 questions + 5 bonus + 20 eggs + 15 memo + 5 sub-45) minus hints
+  // Per-room time tracking — for the certificate
+  b.roomTimes = ROOM_FLOW.map(r => {
+    const startedAt = state.roomTimersStarted[r.id];
+    const lastPopup = r.popups[r.popups.length - 1];
+    const closedAt = state.popupAnsweredAt[lastPopup.id];
+    if (!startedAt || !closedAt) {
+      return { id: r.id, label: r.label, allocatedSec: r.timerSec, takenSec: null, status: "incomplete", shoutout: null };
+    }
+    const takenSec = Math.max(0, Math.round((closedAt - startedAt) / 1000));
+    const earlyBy = r.timerSec - takenSec;
+    let status, shoutout;
+    if (earlyBy >= 60 * 5) {
+      status = "very-early";
+      shoutout = "☕☕☕ Espresso speed — drank that one in the time it takes to wait for the milk to steam.";
+    } else if (earlyBy >= 60 * 2) {
+      status = "early";
+      shoutout = "☕☕ Beat the steam — finished while the foam was still warm.";
+    } else if (earlyBy >= 30) {
+      status = "just-early";
+      shoutout = "☕ Cup down before the third sip — neat work.";
+    } else if (earlyBy >= 0) {
+      status = "on-time";
+      shoutout = "On the dot — you nursed that cup all the way to the end.";
+    } else if (earlyBy > -60 * 3) {
+      status = "slight-over";
+      shoutout = "Coffee cooled a little. Sarah let it slide.";
+    } else {
+      status = "over";
+      shoutout = "Coffee went cold on this one — Sarah noticed.";
+    }
+    return { id: r.id, label: r.label, allocatedSec: r.timerSec, takenSec, earlyBy, status, shoutout };
+  });
+  // Total — out of 85 (8 questions × 5 = 40 + 5 all-MCQ bonus + 20 eggs + 15 memo + 5 sub-45) minus hints
+  const MAX = 85;
   const total = Math.max(0, b.questions + b.allMcqBonus + b.eggs + b.memo + b.subFortyFiveBonus - b.hintPenalty);
   state.finalScore = total;
   state.elapsedSec = elapsedSec;
-  state.coffeeScore = Math.round((total / 80) * 100) / 10;
+  state.coffeeScore = Math.round((total / MAX) * 100) / 10;
   state.breakdown = b;
   state.qResults = qResults;
 }
@@ -1101,7 +1398,7 @@ function renderScore() {
     <h1>${escapeHtml(state.teamName || "Team")}</h1>
     <p class="team-name">Before the Coffee Gets Cold · final tally</p>
     <div class="coffee-score">${state.coffeeScore.toFixed(1)}</div>
-    <div class="of">/ 10 ☕ · raw ${total} / 80</div>
+    <div class="of">/ 10 ☕ · raw ${total} / 85</div>
     <div class="tier-name">${tier.label}</div>
     <div class="signoff">${escapeHtml(tier.signoff)}</div>
     <div style="margin-top:14px;font-size:12px;color:var(--coffee-4);font-family:ui-monospace,monospace;">${escapeHtml(finishLabel)}</div>
@@ -1109,7 +1406,7 @@ function renderScore() {
 
   // Breakdown
   html += `<div class="score-section"><h3>How that broke down</h3>`;
-  html += scoreRow("Multiple-choice questions (7 × 5)", b.questions, 35, "miss");
+  html += scoreRow("Multiple-choice questions (8 × 5)", b.questions, 40, "miss");
   html += scoreRow("All MCQs answered (bonus)", b.allMcqBonus, 5);
   html += scoreRow("Easter eggs found (4 × 5)", b.eggs, 20);
   html += scoreRow("Memo quality (keyword + length)", b.memo, 15);
@@ -1136,14 +1433,49 @@ function renderScore() {
   });
   html += `</div>`;
 
-  // Eggs
-  html += `<div class="score-section"><h3>Easter eggs · what you spotted</h3>`;
+  // Per-room time + shoutouts
+  if (b.roomTimes && b.roomTimes.length) {
+    html += `<div class="score-section"><h3>Time per room ☕</h3>`;
+    b.roomTimes.forEach(rt => {
+      const fmt = s => s == null ? "—" : `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
+      const allocated = fmt(rt.allocatedSec);
+      const taken = fmt(rt.takenSec);
+      let badge = "—", col = "#94A3B8";
+      if (rt.status === "very-early") { badge = `−${fmt(rt.earlyBy)} early`; col = "#047857"; }
+      else if (rt.status === "early") { badge = `−${fmt(rt.earlyBy)} early`; col = "#047857"; }
+      else if (rt.status === "just-early") { badge = `−${fmt(rt.earlyBy)} early`; col = "#059669"; }
+      else if (rt.status === "on-time") { badge = "on the clock"; col = "#65A30D"; }
+      else if (rt.status === "slight-over") { badge = `+${fmt(-rt.earlyBy)} over`; col = "#B45309"; }
+      else if (rt.status === "over") { badge = `+${fmt(-rt.earlyBy)} over`; col = "#B91C1C"; }
+      else if (rt.status === "incomplete") { badge = "not finished"; col = "#94A3B8"; }
+      html += `<div class="score-row" style="align-items:flex-start;">
+        <span style="width:18px;flex-shrink:0;text-align:center;font-weight:700;color:${col};padding-top:1px;">☕</span>
+        <span class="label"><b>${escapeHtml(rt.label)}</b><span class="sub">Allocated ${allocated} · Taken ${taken}${rt.shoutout ? " — <em>" + escapeHtml(rt.shoutout) + "</em>" : ""}</span></span>
+        <span class="pts" style="color:${col};font-weight:600;">${badge}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Eggs — base (spotted it) + DOC ID bonus
+  html += `<div class="score-section"><h3>Easter eggs · what you spotted (3 pts) + DOC ID cited (2 pts bonus)</h3>`;
   EGG_KEYWORDS.forEach(e => {
-    const hit = b.eggResults.some(r => r.id === e.id);
-    html += `<div class="score-row">
-      <span style="width:18px;flex-shrink:0;text-align:center;font-weight:700;color:${hit?"#047857":"#94A3B8"};">${hit?"✓":"—"}</span>
-      <span class="label"><b>${escapeHtml(e.label)}</b><span class="sub">Tested feature: ${escapeHtml(e.feature)}</span></span>
-      <span class="pts ${hit?"full":"miss"}">${hit?"+5":"0"}</span>
+    const r = b.eggResults.find(x => x.id === e.id);
+    const earned = r ? r.earned : 0;
+    const baseHit = !!(r && r.baseHit);
+    const docHit = !!(r && r.docHit);
+    const max = (e.basePts || 0) + (e.bonusPts || 0);
+    const sym = earned >= max ? "✓" : (earned > 0 ? "◐" : "—");
+    const symCol = earned >= max ? "#047857" : (earned > 0 ? "#B45309" : "#94A3B8");
+    let detail = "";
+    if (baseHit && docHit) detail = `Spotted it <b>and</b> cited ${escapeHtml(e.canonical)} — full credit`;
+    else if (baseHit) detail = `Spotted it but didn't cite the DOC ID. Canonical: <b>${escapeHtml(e.canonical)}</b>`;
+    else if (docHit) detail = `Cited ${escapeHtml(e.canonical)} but didn't describe what it was. Half credit.`;
+    else detail = `Missed entirely. Canonical: <b>${escapeHtml(e.canonical)}</b> (tested feature: ${escapeHtml(e.feature)})`;
+    html += `<div class="score-row" style="align-items:flex-start;">
+      <span style="width:18px;flex-shrink:0;text-align:center;font-weight:700;color:${symCol};padding-top:1px;">${sym}</span>
+      <span class="label"><b>${escapeHtml(e.label)}</b><span class="sub">${detail}</span></span>
+      <span class="pts ${earned >= max ? "full" : (earned > 0 ? "partial" : "miss")}">+${earned}/${max}</span>
     </div>`;
   });
   html += `</div>`;
@@ -1186,7 +1518,7 @@ function renderScore() {
       <button class="btn" id="emailBtn">Email it to me</button>
       <button class="btn-coffee" id="resetBtn">Pour a new cup ☕</button>
     </div>
-    <div class="banner" style="margin-top:14px;">If your facilitator deployed this with Netlify Forms or similar, your submission is already with them. Otherwise — print, download, or email the certificate to whoever is keeping the leaderboard.</div>
+    <div class="banner" style="margin-top:14px;">☕ Print or download the certificate, or email it to whoever is keeping the leaderboard. The barista will be impressed either way.</div>
   </div>`;
 
   c.innerHTML = html;
