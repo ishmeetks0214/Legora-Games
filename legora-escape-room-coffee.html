@@ -538,7 +538,8 @@ const ROOM_FLOW = [
               { id: "d", label: "NovaTech's own investor-relations site" }
             ],
             correct: "b",
-            truth: "The memo first surfaced as a screenshot on Reddit (r/wearabletech) on 10 March 2024 — captured by NovaTech before it was deleted (DOC_0159). Sarah Chen's internal leak risk assessment (DOC_0025) documents both the Reddit incident and a separate Verge journalist's inside-source claim. The Shenzhen factory's internal Chinese-language quality report (DOC_0301 / DOC_0308) is a related foreign-language artefact in the matter. Charlotte Webb at the FT picked the memo up in September 2024 — six months after the Reddit post. The Reddit post is patient zero, not the FT."
+            truth: "The memo first surfaced as a screenshot on Reddit (r/wearabletech) on 10 March 2024 — captured by NovaTech before it was deleted (DOC_0159). Sarah Chen's internal leak risk assessment (DOC_0025) documents both the Reddit incident and a separate Verge journalist's inside-source claim. The Shenzhen factory's internal Chinese-language quality report (DOC_0301 / DOC_0308) is a related foreign-language artefact in the matter. Charlotte Webb at the FT picked the memo up in September 2024 — six months after the Reddit post. The Reddit post is patient zero, not the FT.",
+            nuance: "Grey area: 'first surfaced' is contestable. Reddit (March) is the documentary anchor; the FT (September) is the public-facing event. Both readings are defensible depending on what counts as 'public.'"
           }
         ]
       },
@@ -559,7 +560,8 @@ const ROOM_FLOW = [
               { id: "d", label: "Yes — 5-0 unanimous, no conditions" }
             ],
             correct: "a",
-            truth: "The 28 March 2024 PSC vote (DOC_0071) was unanimous on a conditional approval. Roberto Fuentes had emailed Chair Linda Park the night before with three written reservations (DOC_0503); Linda's reply (DOC_0504) — 'a 4-1 vote with a recorded dissent is better than a 5-0 that papers over concerns' — encouraged him to vote his conscience. He did. The PSC resolution conditioned launch on (a) Project Orion validation, (b) Roberto's formal QA sign-off, (c) updated GlobalTest testing with v2.4 firmware, (d) updated documentation. The June 2024 final launch sign-off (DOC_0362) was 5-0 unanimous after all conditions were met."
+            truth: "The 28 March 2024 PSC vote (DOC_0071) was unanimous on a conditional approval. Roberto Fuentes had emailed Chair Linda Park the night before with three written reservations (DOC_0503); Linda's reply (DOC_0504) — 'a 4-1 vote with a recorded dissent is better than a 5-0 that papers over concerns' — encouraged him to vote his conscience. He did. The PSC resolution conditioned launch on (a) Project Orion validation, (b) Roberto's formal QA sign-off, (c) updated GlobalTest testing with v2.4 firmware, (d) updated documentation. The June 2024 final launch sign-off (DOC_0362) was 5-0 unanimous after all conditions were met.",
+            nuance: "Grey area: the vote landed unanimous on the facts. But Linda's pre-meeting reply to Roberto explicitly encouraged a recorded dissent — which means the unanimous label depends on Roberto choosing not to dissent after his conditions were built in. A hostile reader would press the question of whether he was nudged into consensus. The factual answer is 'yes, unanimous'; the spirit of the vote is harder to defend."
           },
           {
             id: "q4", type: "mcq",
@@ -571,7 +573,8 @@ const ROOM_FLOW = [
               { id: "d", label: "LOW" }
             ],
             correct: "b",
-            truth: "Marcus's draft v2 of the memo (DOC_0509) had product-performance risk = HIGH. Elena's handwritten margin note asked to soften it: 'the Board will read HIGH as a red flag.' Marcus agreed to change it to MODERATE-HIGH — but stated explicitly in writing that the change was driven by Project Orion mitigation data, not optics. He refused Elena's separate request to lower commercial risk (kept at HIGH). The final memo (DOC_0094, ENG-MEMO-2024-0003) carries product-performance risk MODERATE-HIGH and commercial risk HIGH."
+            truth: "Marcus's draft v2 of the memo (DOC_0509) had product-performance risk = HIGH. Elena's handwritten margin note asked to soften it: 'the Board will read HIGH as a red flag.' Marcus agreed to change it to MODERATE-HIGH — but stated explicitly in writing that the change was driven by Project Orion mitigation data, not optics. He refused Elena's separate request to lower commercial risk (kept at HIGH). The final memo (DOC_0094, ENG-MEMO-2024-0003) carries product-performance risk MODERATE-HIGH and commercial risk HIGH.",
+            nuance: "Grey area: the rating moved between drafts, full stop. Read in good faith with Marcus's reply, the change is data-driven. Read in bad faith with Elena's preceding 'red flag' note, it looks like pressure-driven editing. The defensibility depends on which side of that exchange the reader cares about — and whether they read the second email carefully enough."
           },
           {
             id: "eggs1", type: "egg-sweep",
@@ -661,7 +664,8 @@ const ROOM_FLOW = [
               { id: "d", label: "Cannot tell from the documents" }
             ],
             correct: "c",
-            truth: "Legal exposure is LOW. Governance worked: Product Safety Committee reviewed (DOC_0071, conditional unanimous approval), final launch sign-off was 5-0 (DOC_0362), GlobalTest re-tested with v2.4 firmware. Sarah's own privileged notes (DOC_0510) — 'I can see the headline: NovaTech Knew' — confirm the risk is reputational, not legal. The CNBC interview coaching audio (DOC_0501) and Richard's own follow-up note to Sarah (DOC_0507) are the documents most exposed to a hostile reading."
+            truth: "Legal exposure is LOW. Governance worked: Product Safety Committee reviewed (DOC_0071, conditional unanimous approval), final launch sign-off was 5-0 (DOC_0362), GlobalTest re-tested with v2.4 firmware. Sarah's own privileged notes (DOC_0510) — 'I can see the headline: NovaTech Knew' — confirm the risk is reputational, not legal. The CNBC interview coaching audio (DOC_0501) and Richard's own follow-up note to Sarah (DOC_0507) are the documents most exposed to a hostile reading.",
+            nuance: "Grey area: LOW is correct today and matches Sarah's own formal assessment. But her private notes flag four forward-looking pressure points — (1) the IEC 62368-1 standard's fit for 24/7 wearables (a class-action narrative), (2) Series E or IPO due-diligence where internal emails about timing and disclosure become material, (3) FDA reclassification of wellness wearables (2-3 year risk), and (4) Richard's CNBC interview, where 'no safety issues' was made while internal testing was active. LOW today; the picture darkens forward."
           },
         ]
       }
@@ -1300,7 +1304,7 @@ function computeScore() {
       const correct = ans === q.correct;
       if (correct) qPts += 5;
       const correctLabel = q.choices.find(c => c.id === q.correct).label;
-      qResults.push({ id: q.id, text: q.text, ans, correct, correctLabel, truth: q.truth });
+      qResults.push({ id: q.id, text: q.text, ans, correct, correctLabel, truth: q.truth, nuance: q.nuance });
     }
   })));
   b.questions = qPts;
