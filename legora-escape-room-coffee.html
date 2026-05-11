@@ -573,7 +573,7 @@ const ROOM_FLOW = [
               { id: "d", label: "LOW" }
             ],
             correct: "b",
-            truth: "Marcus's draft v2 of the memo (DOC_0509) had product-performance risk = HIGH. Elena's handwritten margin note asked to soften it: 'the Board will read HIGH as a red flag.' Marcus agreed to change it to MODERATE-HIGH — but stated explicitly in writing that the change was driven by Project Orion mitigation data, not optics. He refused Elena's separate request to lower commercial risk (kept at HIGH). The final memo (DOC_0094, ENG-MEMO-2024-0003) carries product-performance risk MODERATE-HIGH and commercial risk HIGH.",
+            truth: "The ratings aren't labelled in the filed memo — you need to follow the draft trail. DOC_0509 (draft v2) has product-performance risk = HIGH. Elena's handwritten margin note asked to soften it: 'the Board will read HIGH as a red flag.' Marcus's reply (also in DOC_0509) confirms he agreed to move it to MODERATE-HIGH — but only because Project Orion mitigation data supported the reduction, not for optics. He refused Elena's separate request to lower commercial risk, which stayed at HIGH. The filed memo (DOC_0094) proceeded on that basis. If you found MODERATE-HIGH by working through the draft and email exchange rather than finding a labelled risk section in the final memo, you did it the right way.",
             nuance: "Grey area: the rating moved between drafts, full stop. Read in good faith with Marcus's reply, the change is data-driven. Read in bad faith with Elena's preceding 'red flag' note, it looks like pressure-driven editing. The defensibility depends on which side of that exchange the reader cares about — and whether they read the second email carefully enough."
           },
           {
@@ -1518,23 +1518,97 @@ function renderScore() {
   html += `<div class="card no-print" style="margin-top:14px;">
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <button class="btn-ghost" id="printBtn">Print / save certificate as PDF</button>
-      <button class="btn-ghost" id="downloadBtn">Download score JSON</button>
       <button class="btn" id="emailBtn">Email it to me</button>
       <button class="btn-coffee" id="resetBtn">Pour a new cup ☕</button>
     </div>
-    <div class="banner" style="margin-top:14px;">☕ Print or download the certificate, or email it to whoever is keeping the leaderboard. The barista will be impressed either way.</div>
+    <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div class="banner" style="margin:0;flex:1;">☕ Print or download the certificate, or email it to whoever is keeping the leaderboard. The barista will be impressed either way.</div>
+      <button id="hotTipsBtn" style="background:var(--legora);color:#fff;border:none;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;flex-shrink:0;">💡 Platform tips</button>
+    </div>
+  </div>`;
+
+  // Hot Tips modal (hidden by default)
+  html += `<div id="hotTipsOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;overflow-y:auto;padding:30px 16px;">
+    <div style="max-width:580px;margin:0 auto;background:var(--legora-dark);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+
+      <!-- Modal header -->
+      <div style="padding:22px 24px 18px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:22px;">💡</span>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:#fff;line-height:1.2;">Legora Hot Tips</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:2px;">remember these for your next matter</div>
+          </div>
+        </div>
+        <button id="hotTipsClose" style="background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:99px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">×</button>
+      </div>
+
+      <!-- Tips -->
+      <div style="padding:20px 24px;display:grid;gap:12px;">
+
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:16px 18px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="font-size:17px;">📋</span>
+            <span style="font-weight:700;color:#fff;font-size:14px;">Tabular Review</span>
+            <span style="font-size:11px;color:#6EE7B7;background:rgba(110,231,183,.15);padding:2px 8px;border-radius:99px;font-weight:600;">exhaustive search</span>
+          </div>
+          <p style="margin:0;font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;">Your go-to for reviewing a large set of documents thoroughly. You don't even need to set up columns — just load your docs and use the <b style="color:#fff;">chat feature</b> to ask questions, surface relevant documents, and dig through the evidence set. Great for the kind of broad-sweep review you tackled in Room 2.</p>
+        </div>
+
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:16px 18px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="font-size:17px;">🔍</span>
+            <span style="font-weight:700;color:#fff;font-size:14px;">Database Search</span>
+            <span style="font-size:11px;color:#6EE7B7;background:rgba(110,231,183,.15);padding:2px 8px;border-radius:99px;font-weight:600;">semantic + keyword</span>
+          </div>
+          <p style="margin:0;font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;">Use this to find documents by <b style="color:#fff;">meaning</b>, not just exact wording. It handles semantic search and keyword search — ideal for hunting down the right clause or piece of evidence quickly across a large corpus.</p>
+        </div>
+
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:16px 18px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="font-size:17px;">✏️</span>
+            <span style="font-weight:700;color:#fff;font-size:14px;">Word Edits</span>
+            <span style="font-size:11px;color:#6EE7B7;background:rgba(110,231,183,.15);padding:2px 8px;border-radius:99px;font-weight:600;">in-document changes</span>
+          </div>
+          <p style="margin:0;font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;">When you want to make changes directly inside Word documents — one or several at the same time. Just like the memo template in today's game: take the template and use <b style="color:#fff;">Word Edits</b> to populate and refine it into the finished document, right inside the platform.</p>
+        </div>
+
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:16px 18px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="font-size:17px;">📝</span>
+            <span style="font-weight:700;color:#fff;font-size:14px;">Editor</span>
+            <span style="font-size:11px;color:#6EE7B7;background:rgba(110,231,183,.15);padding:2px 8px;border-radius:99px;font-weight:600;">doc creation</span>
+          </div>
+          <p style="margin:0;font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;">Legora's native document creation tool. Use it when you want to <b style="color:#fff;">draft a new document from scratch</b>, or keep a "live" doc that you can keep building on using the platform's full capabilities — research, analysis, and iteration all in one place.</p>
+        </div>
+
+      </div>
+
+      <!-- Modal footer -->
+      <div style="padding:16px 24px 22px;text-align:center;">
+        <button id="hotTipsClose2" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:10px 28px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Close</button>
+      </div>
+
+    </div>
   </div>`;
 
   c.innerHTML = html;
 
   document.getElementById("printBtn").onclick = () => window.print();
-  document.getElementById("downloadBtn").onclick = downloadJSON;
   document.getElementById("emailBtn").onclick = emailCert;
   document.getElementById("resetBtn").onclick = () => {
     if (!confirm("Pour a new cup? Your current run will be wiped.")) return;
     localStorage.removeItem(STORAGE_KEY);
     location.reload();
   };
+
+  // Hot tips modal
+  const overlay = document.getElementById("hotTipsOverlay");
+  document.getElementById("hotTipsBtn").onclick = () => { overlay.style.display = "block"; };
+  const closeModal = () => { overlay.style.display = "none"; };
+  document.getElementById("hotTipsClose").onclick = closeModal;
+  document.getElementById("hotTipsClose2").onclick = closeModal;
+  overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
 }
 
 function scoreRow(label, got, max) {
