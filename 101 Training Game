@@ -1,0 +1,1479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Legora · Bite-Size Warm-Up</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23005230' d='M16.8,0v15.2h15.2v1.6c-10.47.4-14.8,4.73-15.2,15.2h-1.6c-.4-10.47-4.73-14.8-15.2-15.2v-1.6C10.47,14.81,14.8,10.47,15.2,0h1.6Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Legora palette — deep forest green, warm cream, white cards */
+    --bg:        #f5f3ee;     /* warm cream */
+    --bg-alt:    #ece8de;     /* subtle band */
+    --card:      #ffffff;
+    --ink:       #0a1410;     /* near-black with green tint */
+    --ink-2:     #1a2520;
+    --muted:     #5a625e;
+    --line:      #e3dfd5;     /* warm border */
+    --line-2:    #efece4;
+    --green:     #005230;     /* primary — Legora brand green */
+    --green-2:   #00683d;     /* hover / mid */
+    --green-3:   #1a7a4f;     /* lighter accent */
+    --green-soft:#e6f0eb;     /* tint background */
+    --green-tint:#cee0d4;
+    --gold:      #b89859;
+    --good:      #1a5a44;
+    --warn:      #a8741a;
+    --bad:       #a4302e;
+    --radius:    14px;
+    --radius-sm: 10px;
+    --shadow-sm: 0 1px 0 rgba(10,20,16,0.04), 0 1px 2px rgba(10,20,16,0.05);
+    --shadow-md: 0 1px 0 rgba(10,20,16,0.05), 0 10px 30px -8px rgba(15,61,46,0.12);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.6 "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 36px 24px 96px; }
+
+  /* ---- Header ---- */
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-bottom: 28px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px; font-weight: 500;
+    color: var(--ink); letter-spacing: -0.01em;
+  }
+  .brand-wordmark {
+    height: 22px; width: auto;
+    display: inline-block;
+  }
+  .brand-wordmark svg { height: 100%; width: auto; display: block; }
+  .brand-divider {
+    width: 1px; height: 18px;
+    background: var(--line);
+  }
+  .brand-text { font-size: 13.5px; color: var(--muted); font-weight: 500; letter-spacing: 0.01em; }
+
+  .progress { display: flex; gap: 6px; align-items: center; }
+  .progress .pip {
+    width: 28px; height: 4px; border-radius: 2px;
+    background: var(--line);
+    transition: background 0.25s;
+  }
+  .progress .pip.active { background: var(--green); }
+  .progress .pip.done   { background: var(--green-3); }
+
+  /* ---- Card ---- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 36px 38px 30px;
+    margin-bottom: 18px;
+  }
+  .card.tight { padding: 28px 32px 24px; }
+
+  /* ---- Type ---- */
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    margin: 0 0 10px;
+    font-size: 34px; line-height: 1.15;
+    letter-spacing: -0.02em; font-weight: 500;
+    color: var(--ink);
+  }
+  h2 {
+    font-family: "Fraunces", Georgia, serif;
+    margin: 0 0 6px;
+    font-size: 26px; line-height: 1.2; letter-spacing: -0.015em;
+    font-weight: 500;
+  }
+  h3 {
+    margin: 22px 0 10px;
+    font-size: 12px; font-weight: 600;
+    color: var(--green-2);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  h3 .h3-sub {
+    color: var(--muted); font-weight: 500;
+    text-transform: none; letter-spacing: 0.01em;
+    margin-left: 6px;
+  }
+  p { margin: 10px 0; color: var(--ink-2); }
+  .muted { color: var(--muted); }
+  .lead { font-size: 16.5px; color: var(--ink-2); }
+
+  /* ---- Pills ---- */
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 999px;
+    background: var(--green-soft); color: var(--green);
+    border: 1px solid var(--green-tint);
+    font-size: 12.5px; font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .pill.muted-pill { background: #fff; color: var(--muted); border-color: var(--line); }
+
+  /* ---- Layout helpers ---- */
+  .row  { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+  @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* ---- Track tiles ---- */
+  .tile {
+    position: relative;
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 22px 20px; cursor: pointer;
+    transition: border-color 0.18s, transform 0.06s, box-shadow 0.18s;
+  }
+  .tile:hover {
+    border-color: var(--green);
+    box-shadow: 0 14px 30px -10px rgba(15,61,46,0.18);
+    transform: translateY(-1px);
+  }
+  .tile-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-2); }
+  .tile h3 {
+    margin: 6px 0 6px; color: var(--ink);
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 22px; font-weight: 500; letter-spacing: -0.01em;
+    text-transform: none;
+  }
+  .tile .pitch { color: var(--muted); font-size: 14.5px; margin: 4px 0 12px; }
+  .tile .tile-icon {
+    position: absolute; top: 22px; right: 22px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--green-soft);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--green);
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    appearance: none; border: 0; cursor: pointer;
+    background: var(--green); color: #fff;
+    font-family: inherit; font-weight: 500; font-size: 14.5px;
+    padding: 11px 22px; border-radius: 999px;
+    transition: background 0.15s, transform 0.06s;
+    letter-spacing: 0.005em;
+  }
+  .btn:hover { background: var(--ink); }
+  .btn:active { transform: translateY(1px); }
+  .btn.ghost {
+    background: transparent; color: var(--ink); border: 1px solid var(--line);
+  }
+  .btn.ghost:hover { border-color: var(--green); color: var(--green); background: #fff; }
+  .btn.small { padding: 8px 14px; font-size: 13px; }
+
+  /* ---- Hint block (Legora-style sage panel) ---- */
+  .hint {
+    background: var(--green-soft);
+    border: 1px solid var(--green-tint);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin: 14px 0;
+    color: var(--ink-2);
+  }
+  .hint .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--green-2); margin-bottom: 8px; font-weight: 600;
+  }
+  .hint ul { margin: 6px 0 0; padding-left: 22px; }
+  .hint li { margin: 6px 0; }
+  .hint code, .hint em { font-style: italic; color: var(--ink); }
+  .hint code { font-family: "Fraunces", Georgia, serif; font-style: normal; }
+
+  /* ---- Doc list ---- */
+  .doclist { margin: 8px 0 0; padding: 0; list-style: none; }
+  .doclist li {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; background: #fff; border: 1px solid var(--line);
+    border-radius: var(--radius-sm); margin-bottom: 6px;
+    font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+    font-size: 12.5px; color: var(--ink-2);
+  }
+  .doclist li .doc-ico {
+    flex: 0 0 16px; color: var(--green); opacity: 0.75;
+  }
+
+  /* ---- Inputs ---- */
+  textarea, input[type=text] {
+    width: 100%; background: #fff; color: var(--ink);
+    border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 12px 14px; font-size: 14.5px;
+    font-family: inherit; resize: vertical;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  textarea { min-height: 120px; }
+  textarea:focus, input[type=text]:focus {
+    outline: none; border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(15,61,46,0.10);
+  }
+  textarea::placeholder { color: var(--muted); opacity: 0.7; }
+
+  .file-input { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .file-input label.btn { cursor: pointer; }
+  .file-input input { display: none; }
+  .file-input .file-name {
+    color: var(--muted); font-family: ui-monospace, monospace; font-size: 13px;
+  }
+
+  /* ---- Actions ---- */
+  .actions {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px;
+    justify-content: flex-end; align-items: center;
+  }
+  .actions .left { margin-right: auto; }
+
+  /* ---- Feedback ---- */
+  .feedback {
+    margin-top: 16px; padding: 12px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--line); background: #fff;
+    display: none;
+    font-size: 14px; line-height: 1.55;
+  }
+  .feedback.show { display: block; }
+  .feedback.good { border-color: var(--green-tint); background: var(--green-soft); color: var(--ink); }
+  .feedback.warn { border-color: #e9d8b2; background: #faf3e3; color: var(--ink); }
+  .feedback.bad  { border-color: #f0c9c7; background: #fbe9e8; color: var(--ink); }
+  .feedback em { color: var(--green-2); font-style: italic; }
+
+  /* ---- Stage head ---- */
+  .stage-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; margin-bottom: 14px;
+  }
+  .stage-head .label {
+    color: var(--green-2); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
+  }
+
+  /* ---- Badge ---- */
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-soft); color: var(--green);
+    border: 1px solid var(--green-tint); border-radius: 999px;
+    padding: 6px 14px; font-weight: 500; font-size: 13px;
+  }
+  .badge.muted-b {
+    background: #fff; color: var(--muted); border-color: var(--line);
+  }
+  .badge .ico { width: 14px; height: 14px; }
+
+  /* ---- Results ---- */
+  .result-headline { text-align: center; padding: 8px 0 0; }
+  .result-headline .score {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 68px; font-weight: 500; letter-spacing: -0.04em;
+    color: var(--green); line-height: 1;
+  }
+  .result-headline .out-of {
+    color: var(--muted); font-size: 22px; font-family: "Fraunces", Georgia, serif;
+    font-weight: 400;
+  }
+  .result-headline .tier {
+    margin-top: 8px; font-size: 14px; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+  }
+  .badges-row {
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    margin: 22px 0 8px;
+  }
+  .achievement {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 999px; padding: 8px 16px;
+    font-size: 13.5px; font-weight: 500; color: var(--ink);
+    transition: all 0.2s;
+  }
+  .achievement .gem {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--green); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .achievement.unearned {
+    color: var(--muted); border-style: dashed; background: transparent;
+  }
+  .achievement.unearned .gem { background: var(--line); color: var(--muted); }
+
+  /* ---- Misc ---- */
+  .footer-note {
+    text-align: center; color: var(--muted); font-size: 12.5px; margin-top: 24px;
+    letter-spacing: 0.005em;
+  }
+  details {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: var(--radius-sm); padding: 12px 16px;
+    margin: 12px 0;
+  }
+  details summary {
+    cursor: pointer; color: var(--green-2); font-weight: 500; font-size: 14px;
+    list-style: none;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before {
+    content: "+"; display: inline-block; width: 18px; color: var(--green);
+    font-family: "Fraunces", serif; font-weight: 600;
+  }
+  details[open] summary::before { content: "−"; }
+  details p { margin: 8px 0; font-size: 14px; }
+  details code {
+    background: var(--green-soft); color: var(--green);
+    padding: 1px 6px; border-radius: 4px; font-size: 12.5px;
+  }
+  .hide { display: none !important; }
+
+  /* Stat row on welcome */
+  .stat-row {
+    display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;
+  }
+
+  /* "How this works" list on welcome */
+  .how-list {
+    list-style: none; margin: 8px 0 18px; padding: 0;
+  }
+  .how-list li {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .how-list li:last-child { border-bottom: 0; }
+  .how-list .num {
+    flex: 0 0 32px;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--green-soft); color: var(--green);
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 16px; font-weight: 600;
+    border: 1px solid var(--green-tint);
+  }
+  .how-list .num.bonus {
+    background: var(--green); color: #fff; border-color: var(--green);
+    font-size: 13px;
+  }
+  .how-list > li > div {
+    flex: 1; color: var(--ink-2); font-size: 15px; line-height: 1.55;
+  }
+  .how-list strong { color: var(--ink); font-weight: 600; }
+  .how-list .how-mins {
+    display: inline-block; margin-left: 8px;
+    color: var(--muted); font-size: 12.5px;
+    letter-spacing: 0.02em;
+  }
+  .setup-note {
+    margin-top: 6px; padding: 12px 14px;
+    background: var(--bg-alt); border-radius: var(--radius-sm);
+    color: var(--muted); font-size: 14px;
+  }
+  .lg-link {
+    color: var(--green); font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--green-tint);
+    padding-bottom: 1px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .lg-link:hover { color: var(--ink); border-bottom-color: var(--green); }
+  .track-footnote {
+    margin-top: 18px; padding-top: 16px;
+    border-top: 1px solid var(--line-2);
+    font-size: 13.5px; text-align: center;
+  }
+
+  /* Stage 3 — named-doc rows, one requirement each */
+  .doc-row {
+    margin-bottom: 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    overflow: hidden;
+  }
+  .doc-row .doc-label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    background: var(--green-soft);
+    border-bottom: 1px solid var(--green-tint);
+    color: var(--ink);
+  }
+  .doc-row .doc-label .doc-ico { color: var(--green); opacity: 0.85; flex: 0 0 14px; }
+  .doc-row .doc-name {
+    font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+    font-size: 12.5px;
+  }
+  .doc-row .doc-field {
+    padding: 14px 16px 16px;
+  }
+  .doc-row .doc-ask {
+    margin-bottom: 8px;
+  }
+  .doc-row .doc-ask-col {
+    display: block;
+    font-size: 11.5px; font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .doc-row .doc-ask-prompt {
+    display: block;
+    color: var(--ink-2); font-size: 14.5px;
+    font-weight: 500;
+  }
+  .doc-row .doc-input {
+    border-radius: var(--radius-sm);
+    font-size: 14.5px; padding: 11px 14px;
+    width: 100%; background: #fff; color: var(--ink);
+    border: 1px solid var(--line);
+    font-family: inherit;
+  }
+  .doc-row .doc-input:focus {
+    outline: none; border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(0,82,48,0.10);
+  }
+
+  /* Soft-block feedback actions */
+  .feedback-actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    justify-content: flex-end; margin-top: 14px;
+    padding-top: 12px; border-top: 1px solid var(--line);
+  }
+
+  /* Platform tips card on results */
+  .tips-card {
+    margin-top: 20px; padding: 22px 24px;
+    background: var(--green-soft);
+    border: 1px solid var(--green-tint);
+    border-radius: var(--radius);
+  }
+  .tips-card .tips-head {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--green); font-weight: 600; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    margin-bottom: 12px;
+  }
+  .tips-card ul {
+    margin: 0; padding-left: 22px;
+  }
+  .tips-card li {
+    margin-bottom: 10px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
+  }
+  .tips-card li:last-child { margin-bottom: 0; }
+  .tips-card strong { color: var(--ink); font-weight: 600; }
+  .tips-card em { color: var(--green-2); font-style: italic; }
+
+  /* Welcome — player form */
+  .player-form {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-top: 6px;
+  }
+  @media (max-width: 560px) { .player-form { grid-template-columns: 1fr; } }
+  .player-form .field {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .player-form label {
+    font-size: 12px; font-weight: 600;
+    color: var(--green-2);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .player-form label .optional {
+    color: var(--muted); font-weight: 500;
+    text-transform: none; letter-spacing: 0.01em;
+  }
+  .player-form input.invalid {
+    border-color: #e0a4a3 !important;
+    box-shadow: 0 0 0 3px rgba(164,48,46,0.10) !important;
+  }
+  .player-note {
+    margin-top: 8px; font-size: 13px;
+  }
+  .form-error {
+    margin-top: 12px; padding: 10px 14px;
+    background: #fbe9e8; border: 1px solid #f0c9c7;
+    border-radius: var(--radius-sm); color: var(--bad);
+    font-size: 13.5px; display: none;
+  }
+  .form-error.show { display: block; }
+
+  /* Back button — always left of the actions row */
+  .actions .back-btn {
+    margin-right: auto;
+    background: transparent; color: var(--muted);
+    border: 1px solid transparent;
+    padding: 8px 12px; border-radius: 999px;
+    font-size: 13px; cursor: pointer; font-family: inherit;
+  }
+  .actions .back-btn:hover { color: var(--green); }
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+
+  <header class="top">
+    <div class="brand">
+      <span class="brand-wordmark" aria-label="Legora">
+        <svg viewBox="0 0 1500 291" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <path fill="#005230" d="M556.1 290.216C594.16 290.216 621.109 281.502 648.082 262.863V150.272H607.243V236.294C595.751 243.441 578.3 249.377 556.1 249.377C497.43 249.377 455.404 204.977 455.404 144.716C455.404 84.4553 499.02 40.8387 559.281 40.8387C580.698 40.8387 599.313 47.1781 612.395 55.5121C619.138 59.8809 628.659 67.4075 637.777 77.7122H640.151V20.2294C620.705 7.9303 589.388 0 558.07 0C474.422 0 411.787 65.0332 411.787 144.716C411.787 224.399 473.235 290.216 556.1 290.216ZM336.354 247.786H257.455V158.986H370.046V122.92H257.455V42.4295H375.199V6.36323H205.125V8.73757C213.838 21.8202 214.242 26.9725 214.242 49.5762V240.663C214.242 263.267 213.838 268.419 205.125 281.502V283.876H373.608L391.439 235.511H388.661C370.426 246.219 364.087 247.81 336.331 247.81M0.0290527 281.502V283.876H158.611L176.443 235.511H173.665C155.43 246.219 149.09 247.81 121.334 247.81H52.3595V6.36323H0.0290527V8.73757C8.74288 21.8202 9.14652 26.9725 9.14652 49.5762V240.663C9.14652 263.267 8.74288 268.419 0.0290527 281.502ZM829.196 0C747.923 0 683.697 65.0332 683.697 144.716C683.697 224.399 743.957 290.216 829.196 290.216C914.435 290.216 974.292 225.206 974.292 144.716C974.292 64.2259 910.066 0 829.196 0ZM829.196 249.377C772.093 249.377 727.289 206.948 727.289 144.716C727.289 82.4846 772.093 40.8387 829.196 40.8387C886.299 40.8387 930.675 83.2681 930.675 144.716C930.675 206.164 885.872 249.377 829.196 249.377ZM1158.64 204.193C1143.16 180.782 1132.85 167.32 1122.55 159.769C1162.2 149.868 1185.99 121.329 1185.99 83.6718C1185.99 36.09 1148.71 6.36323 1095.19 6.36323H998.059V8.33393C1011.55 21.0129 1011.55 38.0607 1011.55 54.7285V240.663C1011.55 263.267 1011.14 268.419 1002.43 281.502V283.876H1063.88V281.502C1055.16 268.419 1054.76 263.267 1054.76 240.663V165.325H1063.88C1088.45 165.325 1089.26 172.472 1117.8 217.656L1159.42 283.876H1221.67V281.098C1201.45 266.021 1191.14 253.746 1158.64 204.193ZM1093.22 132.037H1054.76V40.0551H1093.22C1122.17 40.0551 1142.78 57.8864 1142.78 85.2388C1142.78 112.591 1122.17 132.037 1093.22 132.037ZM1472.62 229.551L1384.22 6.36323H1348.13L1259.74 229.551C1252.59 247.786 1244.25 266.828 1232.36 281.502V283.876H1296.99V281.502C1291.05 271.577 1290.65 264.454 1298.98 242.254L1315.63 197.45H1416.73L1433.37 242.254C1441.7 264.454 1441.3 271.577 1435.34 281.502V283.876H1499.97V281.502C1488.08 266.828 1479.77 247.786 1472.62 229.551ZM1329.11 161.764L1366.37 61.8516L1403.24 161.764H1329.11Z"/>
+        </svg>
+      </span>
+      <span class="brand-divider"></span>
+      <span class="brand-text">Bite-Size Warm-Up</span>
+    </div>
+    <div class="progress" id="prog" aria-hidden="true">
+      <div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div>
+    </div>
+  </header>
+
+  <!-- 0. Welcome -->
+  <section class="card" id="view-welcome">
+    <h1>Right. You just sat through the 101.<br/>Did anything stick?</h1>
+    <p class="lead muted">A ten-minute warm-up to make sure the platform actually makes sense in your hands, not just on a slide.</p>
+
+    <h3>How this works</h3>
+    <ol class="how-list">
+      <li>
+        <span class="num">1</span>
+        <div>
+          <strong>A partner needs talking points.</strong> You'll get a client problem and three documents. Don't write the bullets yourself — that's what the Assistant is for. Bring the result back here.
+          <span class="how-mins">~3 min</span>
+        </div>
+      </li>
+      <li>
+        <span class="num">2</span>
+        <div>
+          <strong>One specific clause is hidden in thirty documents.</strong> There is a search functionality for exactly this. Use it. Paste the wording back here verbatim.
+          <span class="how-mins">~4 min</span>
+        </div>
+      </li>
+      <li>
+        <span class="num bonus">★</span>
+        <div>
+          <strong>Bonus — review all thirty in one go.</strong> Yes, all of them. At once. The platform does the heavy lifting; you decide what columns the partner needs. For the brave.
+          <span class="how-mins">~3 min · optional</span>
+        </div>
+      </li>
+    </ol>
+
+    <p class="muted setup-note"><strong style="color:var(--ink);">Setup.</strong> Open Legora in another tab — <a class="lg-link" href="https://app.eu.legora.com" target="_blank" rel="noopener">app.eu.legora.com&nbsp;↗</a>. Once you've picked a track, the next page will have the zip with the right document pack — download it, create a new Project in Legora, and upload the docs into it. The rest of the game runs against that Project. This card just gives you the prompts and grades the result; the actual work happens in Legora.</p>
+
+    <div class="form-error" id="form-error">Pop your name in above. Email is optional, but if you do fill it in, make sure it's a valid address.</div>
+
+    <div class="stat-row">
+      <span class="pill">⏱ 10 minutes</span>
+    </div>
+
+    <h3>Before we start — who are you?</h3>
+    <div class="player-form">
+      <div class="field">
+        <label for="player-name">Name</label>
+        <input type="text" id="player-name" autocomplete="name" placeholder="e.g. Jane Doe" />
+      </div>
+      <div class="field">
+        <label for="player-email">Work email <span class="optional">— optional</span></label>
+        <input type="text" id="player-email" autocomplete="email" inputmode="email" placeholder="you@firm.com (optional)" />
+      </div>
+    </div>
+    <p class="muted player-note">Just so we can put your name on the completion certificate at the end — and so you can send it to yourself. Nothing is stored or logged.</p>
+
+    <div class="actions">
+      <button class="btn" onclick="beginGame()">Begin <span style="margin-left:4px;">→</span></button>
+    </div>
+  </section>
+
+  <!-- 1. Track picker -->
+  <section class="card hide" id="view-track">
+    <h2>Pick whichever is closest to your practice.</h2>
+    <p class="lead muted">It might not fit squarely — and that's fine. Don't get hung up here. The scenario is window dressing; what we're really testing is the features, and both tracks take you through the same three, in the same order. Pick whichever sounds more useful (or more fun) to play through. You can always run the other side after.</p>
+
+    <div class="grid2">
+      <div class="tile" onclick="pickTrack('tx')">
+        <div class="tile-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        </div>
+        <div class="tile-eyebrow">Track A</div>
+        <h3>Transactions</h3>
+        <p class="pitch">A partner needs talking points on a live acquisition before a 9.30 client call. You'll work with a Heads of Terms, an SPA extract and a slightly awkward CEO-to-CEO side letter — then comb a 30-NDA portfolio for one unusually aggressive clause.</p>
+        <span class="pill muted-pill">Crumbleberry acquires FlourPower</span>
+      </div>
+      <div class="tile" onclick="pickTrack('co')">
+        <div class="tile-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 12h14"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <div class="tile-eyebrow">Track B</div>
+        <h3>Contentious</h3>
+        <p class="pitch">An insurer's general counsel has a furious customer about to refer his complaint to the Financial Ombudsman. You'll work with the complaint letter, a draft response and an internal email — then comb a 30-document disclosure bundle for the precise wording at the heart of it.</p>
+        <span class="pill muted-pill">Pondercat v Wormwood</span>
+      </div>
+    </div>
+
+    <p class="muted track-footnote">Either way, you'll touch all three features. The point isn't the fact pattern — it's whether the platform makes sense in your hands.</p>
+
+    <div class="actions">
+      <button class="back-btn" onclick="back()">← Back</button>
+    </div>
+  </section>
+
+  <!-- 1b. Setup — download pack + spin up a Project in Legora -->
+  <section class="card hide" id="view-setup">
+    <div class="stage-head">
+      <div>
+        <div class="label">Setup · before the stages start</div>
+        <h2 id="setup-title">Get the documents into Legora</h2>
+      </div>
+      <span class="badge"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>~2 min</span>
+    </div>
+    <p id="setup-brief">Two quick steps and you're off. Don't worry — the rest is just clicking around in Legora.</p>
+
+    <ol class="how-list">
+      <li>
+        <span class="num">1</span>
+        <div>
+          <strong>Download your document pack.</strong> One zip, opens with anything (Mac/Windows handle it natively). Unzip somewhere obvious — your Desktop or Downloads.
+          <div style="margin-top:10px;">
+            <a class="btn small" id="setup-download" href="#" download>⬇ Download <span id="setup-download-name">the pack</span></a>
+            <span class="muted" id="setup-download-meta" style="margin-left:10px;font-size:13px;"></span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="num">2</span>
+        <div>
+          <strong>Open <a class="lg-link" href="https://app.eu.legora.com" target="_blank" rel="noopener">app.eu.legora.com&nbsp;↗</a> and create a new Project.</strong> Name it whatever you like (e.g. <code id="setup-project-name">Crumbleberry / FlourPower</code>). Drag the documents into the Project — all of them. Wait a moment for Legora to ingest. That's it.
+        </div>
+      </li>
+    </ol>
+
+    <div class="hint">
+      <span class="tag">Why we're doing this</span>
+      <div>So you actually create something in Legora rather than just typing into our boxes. Every stage from here uses the Project you just made.</div>
+    </div>
+
+    <div class="actions">
+      <button class="back-btn" onclick="back()">← Back</button>
+      <button class="btn" onclick="go('s1')">I've done it — let's go →</button>
+    </div>
+  </section>
+
+  <!-- 2. Stage 1 — Assistant -->
+  <section class="card hide" id="view-s1">
+    <div class="stage-head">
+      <div>
+        <div class="label">Stage 1 of 3 · Assistant</div>
+        <h2 id="s1-title">The Partner Call</h2>
+      </div>
+      <span class="badge"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="s1-mins">~3 min</span></span>
+    </div>
+    <p id="s1-brief"></p>
+
+    <h3>Documents to use <span class="h3-sub" id="s1-doc-source"></span></h3>
+    <ul class="doclist" id="s1-doclist"></ul>
+
+    <div class="hint">
+      <span class="tag">
+        <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.39 6.95L22 10l-5.5 4.75L18.18 22 12 18.27 5.82 22l1.68-7.25L2 10l7.61-1.05L12 2z"/></svg>
+        Where to go in Legora
+      </span>
+      <div id="s1-hints"></div>
+    </div>
+
+    <h3>Hand in your talking points</h3>
+    <p class="muted">Either paste the bullets Assistant gave you, or upload the exported Word doc / thread. Your choice.</p>
+    <textarea id="s1-paste" placeholder="Paste 4–7 bullet points here…"></textarea>
+    <div class="file-input" style="margin-top: 12px;">
+      <label class="btn ghost small" for="s1-file">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+        Or upload .docx / .pdf
+      </label>
+      <input type="file" id="s1-file" accept=".docx,.doc,.pdf,.txt" onchange="onFile('s1')" />
+      <span class="file-name" id="s1-filename">no file selected</span>
+    </div>
+    <div class="feedback" id="s1-fb"></div>
+
+    <div class="actions">
+      <button class="back-btn" onclick="back()">← Back</button>
+      <button class="btn ghost small" onclick="go('track')">Switch track</button>
+      <button class="btn" onclick="checkS1()">Hand it in</button>
+    </div>
+  </section>
+
+  <!-- 3. Stage 2 — Database Search -->
+  <section class="card hide" id="view-s2">
+    <div class="stage-head">
+      <div>
+        <div class="label">Stage 2 of 3 · Database Search</div>
+        <h2 id="s2-title">The Needle</h2>
+      </div>
+      <span class="badge"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="s2-mins">~4 min</span></span>
+    </div>
+    <p id="s2-brief"></p>
+
+    <div class="hint">
+      <span class="tag">
+        <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        Where to go in Legora
+      </span>
+      <div id="s2-hints"></div>
+    </div>
+
+    <h3>Paste the verbatim clause</h3>
+    <p class="muted">Copy the wording exactly as it appears in the document. Quotation marks optional. We'll forgive minor whitespace.</p>
+    <textarea id="s2-paste" placeholder="Paste the clause here…"></textarea>
+    <div class="feedback" id="s2-fb"></div>
+
+    <div class="actions">
+      <button class="back-btn" onclick="back()">← Back</button>
+      <button class="btn" onclick="checkS2()">Submit clause</button>
+    </div>
+  </section>
+
+  <!-- 4. Stage 3 — Gate -->
+  <section class="card hide" id="view-s3-gate">
+    <div class="stage-head">
+      <div>
+        <div class="label">Stage 3 of 3 · Bonus</div>
+        <h2>Feeling brave?</h2>
+      </div>
+      <span class="badge"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>~3 min</span>
+    </div>
+    <p id="s3-gate-brief"></p>
+    <div class="actions">
+      <button class="back-btn" onclick="back()">← Back</button>
+      <button class="btn ghost" onclick="skipS3()">Skip to results</button>
+      <button class="btn" onclick="go('s3')">Bring it on →</button>
+    </div>
+  </section>
+
+  <!-- 5. Stage 3 — Tabular Review -->
+  <section class="card hide" id="view-s3">
+    <div class="stage-head">
+      <div>
+        <div class="label">Stage 3 of 3 · Tabular Review (bonus)</div>
+        <h2 id="s3-title">The Grid</h2>
+      </div>
+      <span class="badge"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>~3 min</span>
+    </div>
+    <p id="s3-brief"></p>
+
+    <h3>Documents to use <span class="h3-sub" id="s3-doc-source"></span></h3>
+    <ul class="doclist" id="s3-doclist"></ul>
+
+    <div class="hint">
+      <span class="tag">
+        <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        Where to go in Legora
+      </span>
+      <div id="s3-hints"></div>
+    </div>
+
+    <h3>Hand in your results</h3>
+    <p class="muted">Once your Tabular Review has run, read off the one value we ask for in each of these three documents. We're checking you actually ran the grid — not your typing.</p>
+    <div id="s3-grading-docs"></div>
+    <div class="feedback" id="s3-fb"></div>
+
+    <div class="actions">
+      <button class="back-btn" onclick="back()">← Back</button>
+      <button class="btn" onclick="checkS3()">Hand it in</button>
+    </div>
+  </section>
+
+  <!-- 6. Results -->
+  <section class="card hide" id="view-results">
+    <div class="result-headline">
+      <div>
+        <span class="score" id="r-score">0</span><span class="out-of"> / <span id="r-max">3</span></span>
+      </div>
+      <div class="tier" id="r-tier">…</div>
+    </div>
+    <div class="badges-row" id="r-badges"></div>
+    <p id="r-comment" style="text-align:center; margin: 16px auto; max-width: 580px; color: var(--ink-2);"></p>
+
+    <details>
+      <summary>What the right answers looked like</summary>
+      <div id="r-spoilers"></div>
+    </details>
+
+    <div class="tips-card">
+      <div class="tips-head">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0012 2z"/></svg>
+        <span>Five platform tips to take with you</span>
+      </div>
+      <ul>
+        <li><strong>Assistant lives in every matter.</strong> Right-hand panel. Drag in docs, ask in plain English, no need to engineer the prompt. Start there for anything analytical.</li>
+        <li><strong>Search is both keyword and semantic.</strong> Type the exact phrase if you have it, or describe the <em>concept</em> if you don't — Legora handles either, across hundreds of documents.</li>
+        <li><strong>Tabular Review is your secret weapon for multi-doc work.</strong> Pull in a portfolio, ask the Assistant inside it to add the columns you want, and you've replaced an hour of manual review with thirty seconds.</li>
+        <li><strong>Chronologies in minutes, not hours.</strong> Drop a disclosure bundle into Tabular Review, add columns for <em>date</em>, a <em>one-line summary</em>, and <em>entities mentioned</em>, then sort by date. What's normally an afternoon of associate time becomes a working chronology you can hand to a partner straight away — and a defensible audit trail with citations back to each source document.</li>
+        <li><strong>Project · Private space · Organisation Database — pick the right one upfront.</strong> A <em>Project</em> is collaborative: add colleagues on the same matter and they see your documents and TRs. <em>Private space</em> is yours alone — anything you create there can <strong>never</strong> be shared with anyone, ever. The <em>Organisation Database</em> is firm-wide content (playbooks, precedents, policies) searchable across every matter. Rule of thumb: if there's any chance you'll want to share the work with a colleague, start in a Project — Private can't be converted retrospectively.</li>
+        <li><strong>Chats are always private — convert them if you want to share.</strong> Every Assistant chat is yours and yours alone, whether you're in Private space or a Project. Colleagues <em>never</em> see your chats. If there's analysis worth sharing, turn the chat output into an Editor document — that's the asset you can share with the team, not the thread itself.</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button class="btn ghost" onclick="restart()">Play again</button>
+      <button class="btn" onclick="switchTrack()" id="r-switch">Try the other track →</button>
+    </div>
+    <p class="footer-note">Nice work. If this surfaced anything you want to revisit, ping your trainer — and yes, this counts toward your "first 30 days" champion badge.</p>
+  </section>
+
+  <p class="footer-note">A Legora training mini-game · companies fictional · any resemblance to real bakeries is, frankly, suspicious.</p>
+</div>
+
+<script>
+// ---------- State ----------
+const state = {
+  track: null,
+  view: 'welcome',
+  scores: { s1: 0, s2: 0, s3: 0 },
+  attempted: { s1: false, s2: false, s3: false },
+  files: { s1: null },
+  player: { name: "", email: "" },
+  history: [],   // stack of past view names for the back button
+};
+
+// ---------- Track content ----------
+const TRACKS = {
+  tx: {
+    pretty: "Transactions",
+    s1: {
+      title: "The Partner Call",
+      mins: "~3 min",
+      brief:
+        "The partner just called. Crumbleberry Bakeries plc is acquiring FlourPower Ltd and she needs five to seven bullets of talking points before a 9.30 call with the client. " +
+        "You've got the Heads of Terms, a draft SPA extract, and a slightly awkward CEO-to-CEO side letter. " +
+        "Get Assistant to do the heavy lifting and bring the talking points back here.",
+      docs: [
+        "2026-05-04_Heads-of-Terms_Crumbleberry-FlourPower.docx",
+        "2026-05-12_Draft-SPA-extract_Crumbleberry-FlourPower.docx",
+        "2026-05-13_Side-letter_Crumbleberry-CEO-to-Sellers.docx",
+      ],
+      hints: `
+        <ul>
+          <li><strong>Open Legora Assistant</strong> in your Project (right-hand panel).</li>
+          <li>Pull the three Stage 1 documents (the Heads of Terms, the SPA extract, and the CEO side letter) into the chat — they're in your Project now.</li>
+          <li>Try: <em>"I have ten minutes to brief a partner on the Crumbleberry / FlourPower deal. Give me 5–7 punchy talking points covering deal value, key conditions, unusual terms, risks, and what to flag to the client."</em></li>
+          <li>Then either copy the bullets back here, or export the thread and upload it.</li>
+        </ul>`,
+      keywords: [
+        // Deal value / consideration
+        "18m", "£18", "18,000", "14.5", "£14.5", "deferred", "earn", "earn-out", "earnout",
+        "1.5m", "1,500,000", "cmrr", "croissant", "monthly recurring",
+        // Conditions / CMA / Quint / Geraldine
+        "cma", "38", "market share", "persephone", "quint", "master baker",
+        "24 month", "24-month", "geraldine", "starter",
+        // Earn-out operational constraints
+        "180", "90", "600 unit", "600 units", "heritage",
+        // November / indemnity
+        "indemnity", "indemnit", "november", "gluten", "bath",
+        "500,000", "£500", "500k", "class action", "fsa", "fine", "recall", "food standards",
+        // MAC + unusual terms
+        "mac", "material adverse", "flour shortage",
+        "locked-box", "locked box", "lockbox", "leakage", "modena", "30,000",
+        // Restrictive covenants
+        "no-poach", "no poach", "non-poach", "non poach", "non-compete",
+        "36 month", "36-month", "specialist",
+        // Side letter
+        "side letter", "ski", "chamonix", "42,000", "ms quint",
+        "25%", "75%", "37,000", "goodwill voucher",
+        // Client flags
+        "client", "w&i", "warranty and indemnity", "service agreement", "informal advice",
+        // General terms
+        "warrant", "exclusivity", "deferred consideration", "completion",
+      ],
+    },
+    s2: {
+      title: "The Needle",
+      mins: "~4 min",
+      brief:
+        "Crumbleberry has signed thirty NDAs across the deal portfolio. One of them — and only one — contains an unusually aggressive no-poach tail clause that the partner needs the verbatim wording of. " +
+        "Use Database Search to find it. Then paste the exact wording in the box below.",
+      hints: `
+        <ul>
+          <li>Open a new Assistant chat in your Project. Point the search at the NDA portfolio (the 30 NDAs you uploaded).</li>
+          <li>Search for the <em>idea</em>, not the exact words. Try: <em>"unusually long no-poach clause with liquidated damages per employee per month"</em>.</li>
+          <li>Open the hit, find the clause, copy the wording <strong>verbatim</strong>.</li>
+        </ul>`,
+      requiredPhrases: [
+        "thirty-six",
+        "specialist sourdough",
+        "25,000",
+        "per affected employee",
+      ],
+      minRequired: 3,
+    },
+    s3: {
+      title: "The Grid",
+      mins: "~3 min",
+      brief:
+        "Bonus round. The partner wants a one-page summary of the entire NDA portfolio. " +
+        "Open Tabular Review across all 30 NDAs and pull three columns — governing law, term, and damages cap. Let Legora do the work.",
+      docs: [
+        "transactions-pack/NDA-portfolio/  (30 documents)",
+      ],
+      gate: "Thirty NDAs. Three columns. One Tabular Review. You either know how this goes by now or you're about to.",
+      hints: `
+        <ul>
+          <li>In your Project, create a <strong>Tabular Review</strong> and pull in all 30 NDAs from the portfolio you uploaded.</li>
+          <li>Add columns one by one — or, even faster, ask the Assistant inside the Tabular Review: <em>"add columns for governing law, term, and damages cap"</em>.</li>
+          <li>Hit run, then come back here and read off the value we ask for in each of the three documents below.</li>
+        </ul>`,
+      gradingDocs: [
+        {
+          label: "NDA-02 — Doughfield Holdings Ltd",
+          column: "Governing law",
+          prompt: "What's the governing law in this NDA?",
+          placeholder: "e.g. New York",
+          hits: ["england", "wales", "e&w"],
+        },
+        {
+          label: "NDA-03 — Patisserie Patatron SA",
+          column: "Term",
+          prompt: "What's the term (duration) of this NDA?",
+          placeholder: "e.g. 5 years",
+          hits: ["2", "two"],
+        },
+        {
+          label: "NDA-11 — Ovenhaus GmbH",
+          column: "Damages cap",
+          prompt: "What's the cap on aggregate liability in this NDA?",
+          placeholder: "e.g. £1,000,000",
+          hits: ["250", "eur", "€"],
+        },
+      ],
+    },
+    spoilers: `
+      <p><strong>Stage 1.</strong> A good brief would cover: the £18m EV and how it's structured (initial / deferred / earn-out), the unusually long 36-month non-poach (a Crumbleberry priority), the £500k indemnity for the November gluten incident, the broad MAC clause (including the flour-shortage trigger), CMA market-share concerns, and the side-letter quirks (Geraldine the starter culture, the ski trip carve-out, the non-binding personal undertakings).</p>
+      <p><strong>Stage 2.</strong> The clause sits in <code>NDA-17 (Brillig Bakehaus Ltd)</code>. Key wording: "<em>For a period of thirty-six (36) months… any baker, master baker, head pastry chef, or specialist sourdough engineer… liquidated damages of £25,000 per affected employee per month.</em>"</p>
+      <p><strong>Stage 3.</strong> Columns: <code>Governing law · Term · Damages cap</code>. England &amp; Wales dominates the portfolio; a few French/German/Swiss/NY outliers. The three we asked: <em>Doughfield Holdings</em> — governing law is <strong>England &amp; Wales</strong>; <em>Patisserie Patatron</em> — term is <strong>2 years</strong>; <em>Ovenhaus GmbH</em> — damages cap is <strong>€250,000</strong>.</p>`,
+  },
+  co: {
+    pretty: "Contentious",
+    s1: {
+      title: "The Partner Call",
+      mins: "~3 min",
+      brief:
+        "Pondercat Insurance Ltd has a furious customer, Reggie Wormwood, who's about to refer his complaint to the Financial Ombudsman Service. " +
+        "The GC wants five to seven talking points for a Monday call — what the complaint is, where Pondercat's exposure sits, and whether to admit the SLA breach. " +
+        "You've got Wormwood's complaint letter, the draft response, and the GC's internal email. Get Assistant to do the heavy lifting and bring the talking points back here.",
+      docs: [
+        "2026-04-04_Complaint-letter_Wormwood-to-Pondercat.docx",
+        "2026-04-10_Internal-email_PondercatGC-to-Firm.docx",
+        "2026-04-15_Draft-response_Pondercat-to-Wormwood.docx",
+      ],
+      hints: `
+        <ul>
+          <li><strong>Open Legora Assistant</strong> in your Project (right-hand panel).</li>
+          <li>Pull the three Stage 1 documents (the complaint letter, the draft response, and the GC's internal email) into the chat — they're in your Project now.</li>
+          <li>Try: <em>"Brief me in 5–7 bullets for a partner call on the Wormwood complaint. Cover: what's the complaint, where we sit on our own SLA, FOS exposure, settlement strategy, and any wider pattern risk."</em></li>
+          <li>Then either copy the bullets back here, or export the thread and upload it.</li>
+        </ul>`,
+      keywords: [
+        // The complaint itself
+        "water", "damage", "flood", "leak", "upstairs", "washing machine",
+        "claim", "denied", "denial", "rejected",
+        // Loss adjuster
+        "loss adjuster", "pillgrim", "adjuster", "report", "recommend", "pay",
+        // SLA / escalation
+        "sla", "14 day", "14-day", "fourteen", "escalation", "escalate",
+        "delay", "8 week", "weeks", "breach",
+        // FOS / ombudsman / exposure
+        "fos", "ombudsman", "financial ombudsman", "exposure",
+        "18,432", "18432", "5,000", "5000", "distress", "25k", "30k",
+        // Strategy
+        "settle", "settlement", "admit", "goodwill", "apologise", "apologize",
+        // Pattern / wider risk
+        "pattern", "wider", "28", "28-case", "compliance", "sweep", "gap",
+        // FCA notification
+        "sup 15", "sup15", "fca", "notification", "regulator",
+        // The denial reasoning
+        "window", "4.2", "exclusion", "open", "contributory",
+        // Names + product
+        "wormwood", "pondercat", "telford", "complaint handling",
+        // General
+        "ex-customer", "policyholder", "consumer duty",
+      ],
+    },
+    s2: {
+      title: "The Needle",
+      mins: "~4 min",
+      brief:
+        "We have 30 documents in the Pondercat disclosure bundle — emails, file notes, a system log, internal memos, and one policy document. " +
+        "Buried in the policy doc is the verbatim wording of the complaint-escalation clause the GC keeps referring to. " +
+        "Use Database Search to find it. Then paste the exact wording in the box below.",
+      hints: `
+        <ul>
+          <li>Open a new Assistant chat in your Project. Point the search at the disclosure bundle (the 30 docs you uploaded).</li>
+          <li>Search for the <em>concept</em>: <em>"automatic escalation of complaints to the Head of Customer Resolution after 14 days"</em>.</li>
+          <li>Open the hit (it's in the Complaint Handling SLA), copy the wording <strong>verbatim</strong>.</li>
+        </ul>`,
+      requiredPhrases: [
+        "fourteen",
+        "head of customer resolution",
+        "forty-eight",
+        "financial ombudsman",
+      ],
+      minRequired: 3,
+    },
+    s3: {
+      title: "The Chronology",
+      mins: "~3 min",
+      brief:
+        "Bonus round. The partner wants a clean chronology of the Wormwood matter before Monday. " +
+        "Open Tabular Review across all 30 disclosure docs and pull three columns — date, one-line summary, and the entities or individuals mentioned. Let Legora do the work.",
+      docs: [
+        "contentious-pack/Disclosure-bundle/  (30 documents)",
+      ],
+      gate: "Thirty documents. Three columns. One Tabular Review. By the end of this you'll have a chronology that would normally take an associate two hours to put together by hand.",
+      hints: `
+        <ul>
+          <li>In your Project, create a <strong>Tabular Review</strong> and pull in all 30 disclosure docs you uploaded.</li>
+          <li>Add columns one by one — or ask the Assistant inside the Tabular Review: <em>"add columns for date of the document, a one-sentence summary, and entities or individuals mentioned"</em>.</li>
+          <li>Run it, then come back here and read off the value we ask for in each of the three documents below.</li>
+        </ul>`,
+      gradingDocs: [
+        {
+          label: "04_2025-10-26_FNoL-Wormwood-water-damage.docx",
+          column: "Date",
+          prompt: "What's the date of this document?",
+          placeholder: "e.g. 14 March 2026",
+          hits: ["26", "october", "10/2025", "2025-10"],
+        },
+        {
+          label: "14_2026-01-12_Wormwood-complaint-portal-submission.docx",
+          column: "Summary",
+          prompt: "One-line summary of what this document is.",
+          placeholder: "e.g. Update on quarterly reporting timeline",
+          hits: ["complaint", "portal", "submission", "formal", "filed", "wormwood"],
+        },
+        {
+          label: "23_2026-03-18_Compliance-flag-memo.docx",
+          column: "Entities or individuals mentioned",
+          prompt: "Who or what is named in this document? List a couple of the entities or individuals.",
+          placeholder: "e.g. John Smith; ACME Holdings Ltd",
+          hits: ["compliance", "telford", "wormwood", "gc", "general counsel", "ceo", "fca", "sup 15", "risk committee", "customer resolution", "pondercat"],
+        },
+      ],
+    },
+    spoilers: `
+      <p><strong>Stage 1.</strong> A good brief would cover: Wormwood claimed for water damage (Oct 2025), Pondercat denied citing a window-open exclusion, the denial doesn't survive the loss adjuster's view, Pondercat then breached its own 14-day SLA by ~6 weeks, FOS exposure is c. £25–30k worst case, the Compliance sweep suggests a wider 28-case pattern, and a SUP 15 notification is in play.</p>
+      <p><strong>Stage 2.</strong> The clause sits in <code>01_2024-04-01_Pondercat-Complaint-Handling-SLA-v3.2.docx</code>, clause 5.1. Key wording: "<em>Any complaint… not resolved to the customer's satisfaction within fourteen (14) calendar days shall be escalated automatically to the Head of Customer Resolution, who shall acknowledge receipt within forty-eight (48) hours and provide a written response within a further ten (10) working days, failing which the matter shall be referred to the Financial Ombudsman Service.</em>"</p>
+      <p><strong>Stage 3.</strong> Columns: <code>Date · Summary · Entities or individuals mentioned</code>. Sort by date — you'll get a clean spine from the October FNoL to the April SUP 15 draft. The three we asked: <em>doc 04</em> — date is <strong>26 October 2025</strong>; <em>doc 14</em> — summary is roughly <strong>Wormwood submits formal complaint via the online portal</strong>; <em>doc 23</em> — entities named include <strong>Pondercat Compliance, the Telford v6.1 case management system, the GC, the CEO, the Risk Committee, the FCA (SUP 15), and the Wormwood case (CMP/2026/00187)</strong>.</p>`,
+  },
+};
+
+// ---------- View routing ----------
+const VIEWS = ["welcome", "track", "setup", "s1", "s2", "s3-gate", "s3", "results"];
+function go(name, opts) {
+  opts = opts || {};
+  if (!opts.silent && state.view && state.view !== name) {
+    state.history.push(state.view);
+  }
+  state.view = name;
+  VIEWS.forEach(v => {
+    const el = document.getElementById("view-" + v);
+    if (el) el.classList.toggle("hide", v !== name);
+  });
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function back() {
+  if (!state.history.length) return;
+  const prev = state.history.pop();
+  // Don't re-push the current view onto history when going back.
+  go(prev, { silent: true });
+}
+function updateProgress() {
+  const map = { welcome: -1, track: -1, setup: -1, s1: 0, s2: 1, "s3-gate": 2, s3: 2, results: 3 };
+  const idx = map[state.view] ?? -1;
+  const pips = document.querySelectorAll("#prog .pip");
+  pips.forEach((p, i) => {
+    p.classList.remove("active", "done");
+    if (i < idx) p.classList.add("done");
+    if (i === idx) p.classList.add("active");
+  });
+}
+
+// ---------- Begin (validate name + email) ----------
+function beginGame() {
+  const nameEl  = document.getElementById("player-name");
+  const emailEl = document.getElementById("player-email");
+  const err     = document.getElementById("form-error");
+  const name  = nameEl.value.trim();
+  const email = emailEl.value.trim();
+  // Email is optional. Only validate if the user filled it in.
+  const emailOk = email === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  nameEl.classList.toggle("invalid", !name);
+  emailEl.classList.toggle("invalid", !emailOk);
+
+  if (!name || !emailOk) {
+    err.classList.add("show");
+    return;
+  }
+  err.classList.remove("show");
+  state.player.name = name;
+  state.player.email = email;
+  go("track");
+}
+
+// ---------- Track pick ----------
+function pickTrack(t) {
+  state.track = t;
+  loadStage1(); loadStage2(); loadStage3(); loadGate(); loadSetup();
+  go("setup");
+}
+
+// ---------- Setup view ----------
+function loadSetup() {
+  const isTx = state.track === "tx";
+  const zipName = isTx ? "101-Transactions.zip" : "101-Contentious.zip";
+  document.getElementById("setup-download-name").textContent = zipName;
+  document.getElementById("setup-download-meta").textContent =
+    isTx ? "33 documents · ~1.2 MB" : "33 documents · ~1.1 MB";
+  document.getElementById("setup-project-name").textContent =
+    isTx ? "Crumbleberry / FlourPower" : "Pondercat v Wormwood";
+  // Point the download anchor at the relative zip path. Distributed alongside the HTML.
+  const a = document.getElementById("setup-download");
+  if (a) { a.setAttribute("href", zipName); a.setAttribute("download", zipName); }
+}
+
+function docIcon() {
+  return '<svg class="doc-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>';
+}
+
+function loadStage1() {
+  const c = TRACKS[state.track].s1;
+  document.getElementById("s1-title").textContent = c.title;
+  document.getElementById("s1-mins").textContent = c.mins;
+  document.getElementById("s1-brief").textContent = c.brief;
+  document.getElementById("s1-doc-source").textContent =
+    "— from the " + dbName() + " Project you just set up in Legora";
+  const ul = document.getElementById("s1-doclist");
+  ul.innerHTML = "";
+  c.docs.forEach(d => {
+    const li = document.createElement("li");
+    li.innerHTML = docIcon() + "<span>" + d + "</span>";
+    ul.appendChild(li);
+  });
+  document.getElementById("s1-hints").innerHTML = c.hints;
+}
+function dbName() {
+  return state.track === "tx" ? "Crumbleberry / FlourPower" : "Pondercat v Wormwood";
+}
+function loadStage2() {
+  const c = TRACKS[state.track].s2;
+  document.getElementById("s2-title").textContent = c.title;
+  document.getElementById("s2-mins").textContent = c.mins;
+  document.getElementById("s2-brief").textContent = c.brief;
+  document.getElementById("s2-hints").innerHTML = c.hints;
+}
+function loadStage3() {
+  const c = TRACKS[state.track].s3;
+  document.getElementById("s3-title").textContent = c.title;
+  document.getElementById("s3-brief").textContent = c.brief;
+  document.getElementById("s3-doc-source").textContent =
+    "— from the " + dbName() + " Project you just set up in Legora";
+  const ul = document.getElementById("s3-doclist");
+  ul.innerHTML = "";
+  c.docs.forEach(d => {
+    const li = document.createElement("li");
+    li.innerHTML = docIcon() + "<span>" + d + "</span>";
+    ul.appendChild(li);
+  });
+  document.getElementById("s3-hints").innerHTML = c.hints;
+
+  // Build the three doc-paste rows — one column requirement each.
+  const wrap = document.getElementById("s3-grading-docs");
+  wrap.innerHTML = "";
+  c.gradingDocs.forEach((gd, i) => {
+    const row = document.createElement("div");
+    row.className = "doc-row";
+    const safePlaceholder = (gd.placeholder || "").replace(/"/g, "&quot;");
+    row.innerHTML =
+      '<div class="doc-label">' +
+        docIcon() +
+        '<span class="doc-name">' + gd.label + '</span>' +
+      '</div>' +
+      '<div class="doc-field">' +
+        '<div class="doc-ask">' +
+          '<span class="doc-ask-col">' + gd.column + '</span>' +
+          (gd.prompt ? '<span class="doc-ask-prompt">' + gd.prompt + '</span>' : '') +
+        '</div>' +
+        '<input type="text" id="s3-doc-' + i + '" class="doc-input" placeholder="' + safePlaceholder + '" />' +
+      '</div>';
+    wrap.appendChild(row);
+  });
+}
+function loadGate() {
+  document.getElementById("s3-gate-brief").textContent = TRACKS[state.track].s3.gate;
+}
+
+function onFile(stage) {
+  const el = document.getElementById(stage + "-file");
+  const nameEl = document.getElementById(stage + "-filename");
+  if (el.files && el.files.length) {
+    state.files[stage] = el.files[0].name;
+    nameEl.textContent = el.files[0].name;
+  } else {
+    state.files[stage] = null;
+    nameEl.textContent = "no file selected";
+  }
+}
+
+function normalize(s) {
+  return (s || "").toLowerCase()
+    .replace(/[‘’“”'`""]/g, "")
+    .replace(/[^\w\s.,;:£€$%\-()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// ---------- Soft-block on warn/bad feedback ----------
+function actionRow(stage) {
+  return '<div class="feedback-actions">' +
+    '<button type="button" class="btn ghost small" onclick="dismissFeedback(\'' + stage + '\')">Hand it in again</button>' +
+    '<button type="button" class="btn small" onclick="confirmAdvance(\'' + stage + '\')">I\'m sure — submit anyway →</button>' +
+  '</div>';
+}
+function dismissFeedback(stage) {
+  const fb = document.getElementById(stage + "-fb");
+  if (!fb) return;
+  fb.classList.remove("show", "good", "warn", "bad");
+  fb.innerHTML = "";
+  // Scroll the answer area back into view so the player can edit.
+  const focusEl =
+    stage === "s1" ? document.getElementById("s1-paste") :
+    stage === "s2" ? document.getElementById("s2-paste") :
+    document.querySelector("#s3-grading-docs textarea");
+  if (focusEl) focusEl.focus({ preventScroll: false });
+}
+function confirmAdvance(stage) {
+  if (stage === "s1") go("s2");
+  else if (stage === "s2") go("s3-gate");
+  else if (stage === "s3") showResults();
+}
+
+function checkS1() {
+  state.attempted.s1 = true;
+  const c = TRACKS[state.track].s1;
+  const paste = document.getElementById("s1-paste").value;
+  const file = state.files.s1;
+  const fb = document.getElementById("s1-fb");
+  fb.classList.remove("good", "warn", "bad");
+
+  let hits = 0;
+  const norm = normalize(paste);
+  if (norm.length > 0) {
+    const seen = new Set();
+    c.keywords.forEach(k => {
+      const n = normalize(k);
+      if (norm.includes(n)) seen.add(n);
+    });
+    hits = seen.size;
+  }
+
+  let score = 0; let mood = "warn"; let msg = "";
+  if (paste.trim().length < 20 && !file) {
+    score = 0; mood = "bad";
+    msg = "We need <em>something</em>. Either paste your bullets or upload the file. Try again — Assistant doesn't bite.";
+  } else if (hits >= 2 || file) {
+    // Generous: any 2 relevant angles = full marks. A Word/PDF upload also counts.
+    score = 1; mood = "good";
+    msg = "Solid brief. " + (hits >= 2
+        ? `We spotted ${hits} of the angles a partner would want flagged. Any decent Assistant brief on this matter would cover several of: ${state.track === "tx" ? "deal value, CMA risk, the earn-out mechanics, the November indemnity, the unusual MAC/non-poach drafting, and the side letter" : "the complaint and the denial, the loss adjuster's view, the SLA breach, FOS exposure, settlement strategy, and the wider 28-case pattern"}. You got there.`
+        : `Counted in good faith — you've handed in the file, that does the job.`);
+  } else if (hits >= 1) {
+    score = 0.5; mood = "warn";
+    msg = `Half marks. We only spotted one of the angles a partner would want — a brief usually covers 4–6. Try a re-prompt — ask Assistant for "<em>punchy bullets covering value, conditions, unusual terms, risks</em>". Or accept the half and press on.`;
+  } else {
+    score = 0; mood = "bad";
+    msg = "We couldn't spot the usual partner-call signals. Try asking Assistant for talking points (5–7 bullets) rather than a summary — and make sure all three docs are attached.";
+  }
+
+  state.scores.s1 = score;
+  fb.classList.add(mood, "show");
+  if (mood === "good") {
+    fb.innerHTML = msg;
+    setTimeout(() => go("s2"), 900);
+  } else {
+    fb.innerHTML = msg + actionRow("s1");
+  }
+}
+
+function checkS2() {
+  state.attempted.s2 = true;
+  const c = TRACKS[state.track].s2;
+  const paste = document.getElementById("s2-paste").value;
+  const fb = document.getElementById("s2-fb");
+  fb.classList.remove("good", "warn", "bad");
+
+  const norm = normalize(paste);
+  let hits = 0;
+  c.requiredPhrases.forEach(p => { if (norm.includes(normalize(p))) hits++; });
+
+  let score = 0; let mood = "warn"; let msg = "";
+  if (paste.trim().length < 30) {
+    score = 0; mood = "bad";
+    msg = "That doesn't look like a verbatim clause — too short. Database Search will hand you the wording; copy the whole sentence.";
+  } else if (hits >= c.minRequired) {
+    score = 1; mood = "good";
+    msg = `Got it. You found ${hits} of the ${c.requiredPhrases.length} distinctive markers in the clause — that's the one.`;
+  } else if (hits >= 1) {
+    score = 0.5; mood = "warn";
+    msg = `Close, but only ${hits} of the ${c.requiredPhrases.length} distinctive phrases match. Re-check Database Search — there's a specific document where this lives.`;
+  } else {
+    score = 0; mood = "bad";
+    msg = "Not the clause we're after. Hint: search for the <em>idea</em>, not exact words — Database Search is semantic.";
+  }
+
+  state.scores.s2 = score;
+  fb.classList.add(mood, "show");
+  if (mood === "good") {
+    fb.innerHTML = msg;
+    setTimeout(() => go("s3-gate"), 1000);
+  } else {
+    fb.innerHTML = msg + actionRow("s2");
+  }
+}
+
+function checkS3() {
+  state.attempted.s3 = true;
+  const c = TRACKS[state.track].s3;
+  const fb = document.getElementById("s3-fb");
+  fb.classList.remove("good", "warn", "bad");
+
+  // Each of the 3 docs has one required column. Count how many had a plausible answer.
+  let correct = 0;
+  let attempted = 0;
+  c.gradingDocs.forEach((gd, i) => {
+    const v = document.getElementById("s3-doc-" + i).value;
+    const norm = normalize(v);
+    const looksFilled = v.trim().length >= 2;
+    if (looksFilled) attempted++;
+    const matched = looksFilled && gd.hits.some(h => norm.includes(normalize(h)));
+    if (matched) correct++;
+  });
+
+  let score = 0; let mood = "warn"; let msg = "";
+  if (attempted === 0) {
+    score = 0; mood = "bad";
+    msg = "Nothing filled in. Run the Tabular Review, then come back and read off the three values.";
+  } else if (correct === 3) {
+    score = 1; mood = "good";
+    msg = "All three landed. That's a Tabular Review you'd hand to a partner without flinching.";
+  } else if (correct === 2) {
+    score = 0.66; mood = "warn";
+    msg = `Two of three matched. The third value doesn't line up with what the grid would give — worth a sanity-check.`;
+  } else if (correct === 1) {
+    score = 0.33; mood = "warn";
+    msg = `Only one of the three matched. Re-open the Tabular Review and double-check the values against the document we asked about.`;
+  } else {
+    score = 0; mood = "bad";
+    msg = `${attempted} filled in but none matched. Make sure you're reading the value from the right column of the right document.`;
+  }
+
+  state.scores.s3 = score;
+  fb.classList.add(mood, "show");
+  if (mood === "good") {
+    fb.innerHTML = msg;
+    setTimeout(() => showResults(), 1000);
+  } else {
+    fb.innerHTML = msg + actionRow("s3");
+  }
+}
+
+function skipS3() {
+  state.attempted.s3 = false;
+  state.scores.s3 = 0;
+  showResults();
+}
+
+function showResults() {
+  const max = state.attempted.s3 ? 3 : 2;
+  const got = state.scores.s1 + state.scores.s2 + (state.attempted.s3 ? state.scores.s3 : 0);
+  document.getElementById("r-score").textContent = (Math.round(got * 2) / 2).toString();
+  document.getElementById("r-max").textContent = max;
+
+  let tier = "", comment = "";
+  const pct = got / max;
+  const first = (state.player.name || "").split(/\s+/)[0] || "";
+  if (pct >= 0.95) {
+    tier = "Honour roll";
+    comment = (first ? `${first}, ` : "") + "if your trainer asks how the 101 went, just say \"watch this\".";
+  } else if (pct >= 0.75) {
+    tier = "Comfortably competent";
+    comment = (first ? `${first} — ` : "") + "you can reach for Legora on a real matter tomorrow and look like you know what you're doing.";
+  } else if (pct >= 0.5) {
+    tier = "Got the shape";
+    comment = (first ? `${first}, ` : "") + "you've got the muscle memory. A second pass on the bits you skimmed will lock it in.";
+  } else {
+    tier = "Worth a re-run";
+    comment = (first ? `No shame in a second go, ${first}.` : "No shame in doing it twice.") + " The platform clicks the second time round.";
+  }
+  document.getElementById("r-tier").textContent = tier;
+  document.getElementById("r-comment").textContent = comment;
+
+  const badges = [
+    { id: "s1", name: "Prompt whisperer", got: state.scores.s1 >= 1 },
+    { id: "s2", name: "Search detective", got: state.scores.s2 >= 1 },
+    { id: "s3", name: "Tabular tamer",    got: state.attempted.s3 && state.scores.s3 >= 1 },
+  ];
+  const row = document.getElementById("r-badges");
+  row.innerHTML = "";
+  badges.forEach(b => {
+    const el = document.createElement("span");
+    el.className = "achievement" + (b.got ? "" : " unearned");
+    el.innerHTML = '<span class="gem">' + (b.got
+      ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
+      : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>'
+    ) + '</span>' + b.name;
+    row.appendChild(el);
+  });
+
+  document.getElementById("r-spoilers").innerHTML = TRACKS[state.track].spoilers;
+  document.getElementById("r-switch").textContent =
+    state.track === "tx" ? "Try the Contentious track →" : "Try the Transactions track →";
+
+  go("results");
+}
+
+function restart() {
+  state.scores = { s1: 0, s2: 0, s3: 0 };
+  state.attempted = { s1: false, s2: false, s3: false };
+  state.files = { s1: null };
+  state.history = [];
+  // Pre-fill the player form so the user doesn't re-type.
+  document.getElementById("player-name").value  = state.player.name  || "";
+  document.getElementById("player-email").value = state.player.email || "";
+  document.getElementById("s1-paste").value = "";
+  document.getElementById("s2-paste").value = "";
+  document.getElementById("s1-filename").textContent = "no file selected";
+  // Stage 3 textareas are rebuilt by loadStage3 when a track is picked.
+  const wrap = document.getElementById("s3-grading-docs");
+  if (wrap) wrap.innerHTML = "";
+  ["s1", "s2", "s3"].forEach(s => {
+    const fb = document.getElementById(s + "-fb");
+    fb.classList.remove("show", "good", "warn", "bad");
+    fb.innerHTML = "";
+  });
+  go("welcome", { silent: true });
+}
+
+function switchTrack() {
+  const other = state.track === "tx" ? "co" : "tx";
+  restart();
+  setTimeout(() => pickTrack(other), 100);
+}
+
+// Document packs are downloaded as relative .zip files alongside this HTML.
+
+go("welcome", { silent: true });
+</script>
+</body>
+</html>
